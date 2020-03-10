@@ -1,0 +1,91 @@
+﻿CSCB58 Project Report: Winter 2020
+
+
+Team Member A
+-------------
+First Name: Ben
+Last Name: Gavrilov
+Student Number: 1004276712
+UofT E-mail Address: ben.gavrilov@mail.utoronto.ca
+
+
+
+
+Team Member B
+-------------
+First Name: Terren
+Last Name: Chan
+Student Number: 1005061727
+UofT E-mail Address: terren.chan@mail.utoronto.ca
+
+
+Project Plan
+--------
+
+
+Project Title: Pong Chaos
+
+
+
+
+Provide a one paragraph description of your project:
+We will be creating a variation of the classic 2 player game, pong. Since pong has already been a common project in previous CSCB58 classes we will choose an appropriate code base for the game fundamentals (reference below) in which there are two pads on opposing sides playing a standardized game with a single ball. We will build on this code base adding extra features each week. Our game will include 4 player compatibility. This means there will be two separate games happening. One in the horizontal orientation and one in the vertical orientation of the screen. Although both games are independent there will still be collision detection between the balls of the opposing games and collision between player pads and balls from opposing games. Our hex displays will keep track of the score of each game. That is HEX4 (player 1) and HEX5 (player 2) will keep track of the score of the first game. HEX3 (player 3) and HEX4 (player 4) will keep track of the score of the second game. First to 10 points wins it all. If a player wins a point the ball will begin on their pad the following round and can launch the ball with a single input button. There may also be an option (if time permits) for each player to launch projectiles into the playing field from their pad. This way a player must avoid the opposing player’s projectiles whilst simultaneously trying to track the ball. 
+
+
+
+
+
+
+
+
+What is your plan for the first week?
+Our first week will consist of building two opposing simultaneous games on the screen. Our referenced  code base allows for a horizontal game. We will take this code base and modify it to allow for a vertical game to exist too. This will require our datapath logic to operate differently for each game as the game entities will have different output behavior for each week.
+
+
+What is your plan for the second week?
+Now that the foundation of the game has been set up and the game can be played very minimalistically, we will be adding features. Week 2 consists of adding HEX display compatibility. As mentioned in the description, every time a player gains a point their HEX score is updated by 1(HEX4: player1, HEX5: player2, HEX3: player3, HEX4: player4). Since a hex display will only allow 0-9 in decimal to be displayed. Once the player reaches 10 the game will end and not attempt to display a 10. Also, for clarification: “for a player to win a point, they must either a) have the opponent miss the ball b) hit the opponent’s pad with a projectile”.
+
+
+
+
+What is your plan for the third week?
+This week we hope to implement launching rectangular projectiles (6 x 4 in size). A projectile will be launched horizontally and its y coordinate location on the screen would be the same as the player’s y coordinate at the time of launch. The projectile would be travelling at the same speed as the ball. Another important factor to keep in mind is that the player cannot simply launch unlimited rectangular projections. We will restrict projectiles to be launched every 5-10 seconds (finalized interval will be determined during testing to optimize game playability). This will be done by implementing a counter to keep track of our time intervals between projectiles. 
+
+
+
+
+What is your backup plan if things don’t work out as planned?
+Given that we have an appropriate code base for traditional pong it should be doable to apply its vertical complement. As for the additional features, we will use our course knowledge to implement functionality (I.e, registers, counters, HEX output). In case these features end up being difficult to implement, we will allow for a different more simplistic feature. The user will not only be able to move its pad up and down but they will also be able to to move the pad horizontally (vice versa for the vertical game). They will be restricted to move to the halfway point on the screen as we want to avoid player pad collision. This will be a much more doable feature to implement as we are simply manipulating the location of the pad on the horizontal axis based on different inputs. We already have the code base for implementing vertical axis manipulation so we apply similar logic to horizontal axis manipulation. This is an extra feature that can replace other features in case the other features prove to be too difficult to implement.
+
+
+Weekly Reports
+--------------
+<In this space, provide a report each week of what worked and what didn't, and what (if any) changes were made to your proposal)>
+
+
+
+
+[This is an example of a report where things didn't go so well.]
+Week 1: 
+        We added and tested the sensors and the main FSM. 
+        The distance sensor we had intended to use didn't work as expected (wasn't precise enough at further distances, only seems to work accurately within 5-10cm), so instead we've decided to change the project to use a light sensor instead.
+        Had trouble getting the FSM to work (kept getting stuck in state 101, took longer to debug than expected), so we may not be able to add the high score feature. We have updated that in the project description as an optional feature.
+
+
+
+
+
+
+References
+----------
+https://github.com/33William33/KeepBouncing/blob/master/project.v : this is the code base for our horizontal pong game. The source code can be found on the github link and was made by previous CSCB58 students.
+
+
+<Make sure to document what YOU added on top of the existing work, especially if you work with a previous project. What is it that YOU added?>
+
+
+
+
+Repo & Video
+------------
+<At the end of the project, provide links to your code repository and presentation video (and passwords if not public>
