@@ -54,7 +54,7 @@ reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
 reg [3:0] P1Score = 0;
 reg	[3:0] P2Score = 0;
-reg game = 1; //Controls the if in game state
+reg game = 1; //Controls if it is in game state
 reg	[2:0] printer = 0;
 wire [9:0] randX;
 wire [9:0] randY;
