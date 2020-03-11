@@ -28,6 +28,7 @@ output VGA_SYNC_N;
 output VGA_VS;
 reg	aresetPll = 0;
 wire pixelClock;
+//Used for traversal of the screen to draw
 wire [10:0] XPixelPosition;
 wire [10:0] YPixelPosition; 
 reg	[7:0] redValue;
@@ -53,7 +54,7 @@ reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
 reg [3:0] P1Score = 0;
 reg	[3:0] P2Score = 0;
-reg flag =1;
+reg game = 1; //Controls the if in game state
 reg	[2:0] printer = 0;
 wire [9:0] randX;
 wire [9:0] randY;
@@ -94,48 +95,48 @@ begin
 	fastClockCounter <= fastClockCounter + 1;
 end
 
-//it controls the left paddle.
+//Controls the left paddle.
 always@(posedge fastClock)
 begin
-	if (SW[0] == 1'b1 && flag == 1) 
+	if (SW[0] == 1'b1 && game == 1) 
 		begin
 			if (KEY[2] == 1'b0 && KEY[3] == 1'b0) 
 				P1y <= P1y;
 			else if (KEY[2] == 1'b0)
 				begin
-					if (P1y+P1_paddle_len >= 895)
+					if (P1y+P1_paddle_len >= 895) //Paddle makes it to the bottom of the area
 						P1y <= 895-P1_paddle_len;
 					else
 						P1y <= P1y + P1_paddle_speed;
 				end
 			else if (KEY[3] == 1'b0)
 				begin
-					if(P1y <= 125)
-						P1y <= 125;
+					if(P1y <= 125) //Paddle makes it to the top of the area
+						P1y <= 125; 
 					else
 						P1y <= P1y - P1_paddle_speed;
 				end
 		end
 	
-	else if (SW[0] == 1'b0)
+	else if (SW[0] == 1'b0) //Reset
 		P1y <= 500;
 end
 
 //it controls the right paddle
 always@(posedge fastClock)
 	begin
-		if (SW[0] == 1'b1 && flag ==1) 
+		if (SW[0] == 1'b1 && game ==1) 
 			begin
-				if (KEY[0] == 1'b0 && KEY[1] == 1'b0) 
+				if (KEY[0] == 1'b0 && KEY[1] == 1'b0)
 					P2y <= P2y;
 				else if (KEY[0] == 1'b0) begin
-					if(P2y+P2_paddle_len >= 895)
+					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the top of the screen
 						P2y <= 895-P2_paddle_len;
 					else
 					P2y <= P2y + P2_paddle_speed;
 				end
 				else if (KEY[1] == 1'b0) begin
-					if(P2y <= 125)
+					if(P2y <= 125) //Paddle makes it to the bottom of the screen
 						P2y <= 125;
 					else
 						P2y <= P2y - P2_paddle_speed;
@@ -145,10 +146,10 @@ always@(posedge fastClock)
 		P2y <= 500;
 	end
 
-//It controls the movement of the ball
+//It controls the movement of the ball, balls position is (XDotPosition, YDotPosition)
 always@(posedge slowClock)
 begin
-	if (SW[0] == 1'b1 && flag ==1)
+	if (SW[0] == 1'b1 && game ==1)
 		begin
 			clock <= clock + 1;
 			printer <= 0;
@@ -177,6 +178,7 @@ begin
 			endcase
 			
 			//It runs the changes of ball or paddle randomly
+			//tool is something????
 			//When the ball meet the tool random point
 			case(tool)
 				0:		begin 
@@ -285,7 +287,7 @@ begin
 					randomtool <= rtool;
 					drawItem <= 0;
 				end
-			else if (XDotPosition - r <= 160)
+			else if (XDotPosition - r <= 160) //Controlling scores when the ball goes off screen
 				begin
 					P2Score = P2Score + 1;
 					XDotPosition <= 640;
@@ -300,7 +302,7 @@ begin
 				
 			if(P1Score == 10 || P2Score ==10)
 				begin
-					flag <= 0;
+					game <= 0;
 					if (P1Score == 10)
 						printer <= 1;
 					else
@@ -320,7 +322,7 @@ begin
 			itemX <= randX;
 			itemY <= randY;
 			printer <= 3;
-			flag <= 1;
+			game <= 1;
 		end
 end
 
@@ -328,6 +330,8 @@ VGAFrequency VGAFreq (aresetPll, CLOCK_50, pixelClock);
 
 VGAController VGAControl (pixelClock, redValue, greenValue, blueValue, VGA_R, VGA_G, VGA_B, VGA_VS, VGA_HS, XPixelPosition, YPixelPosition);
 
+//For Drawing borders, players and ball to screen
+//XPixelPosition and YPixelPosition traverse the screen like in lab 6 and draw what it needs to when it hits certain spots
 //VGA pattern and charactor display
 always@ (posedge pixelClock)
 begin		
@@ -1177,6 +1181,8 @@ begin
 end
 
 endmodule
+
+//VGA stuff probably not needed since vga_adapter from lab 6 is included
 
 // The VGAController is the source code
 // This is a controller written for a VGA Monitor with resolution 1280 by 1024 with an refresh rate of 60 fps
