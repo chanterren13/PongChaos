@@ -55,10 +55,10 @@ reg	[10:0] P1x = 225;
 reg	[10:0] P1y = 500;
 reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
-reg [10:0] P3x = 567; //midpoint of the field is 630 and paddle width is 125 -> 630 - (125/2) ~= 567
+reg [10:0] P3x = 567; //midpoint of the field is 630 and paddle length is 125 -> 630 - (125/2) ~= 567
 reg [10:0] P3y = 125; //upper bound drawn at y = 125
 reg [10:0] P4x = 567;
-reg [10:0] P4y = 890; //lower bound drawn at y = 895
+reg [10:0] P4y = 885; //lower bound drawn at y = 895 + 10 for the width of the paddle
 reg [3:0] P1Score = 0;
 reg	[3:0] P2Score = 0;
 reg [3:0] P3Score = 0;
@@ -104,6 +104,8 @@ begin
 	fastClockCounter <= fastClockCounter + 1;
 end
 
+//------------------------------------------------------------------------------------------------------
+//Controlling Player Movement
 //it controls the left paddle.
 always@(posedge fastClock)
 begin
@@ -111,16 +113,16 @@ begin
 		begin
 			if (KEY[2] == 1'b0 && KEY[3] == 1'b0) 
 				P1y <= P1y;
-			else if (KEY[2] == 1'b0) //Moving down
+			else if (KEY[2] == 1'b0)
 				begin
-					if (P1y+P1_paddle_len >= 895)
+					if (P1y+P1_paddle_len >= 895) //Paddle makes it to the bottom of the area
 						P1y <= 895-P1_paddle_len;
 					else
 						P1y <= P1y + P1_paddle_speed;
 				end
-			else if (KEY[3] == 1'b0) //Moving up
+			else if (KEY[3] == 1'b0) 
 				begin
-					if(P1y <= 125)
+					if(P1y <= 125) //Paddle makes it to the top of the area
 						P1y <= 125;
 					else
 						P1y <= P1y - P1_paddle_speed;
@@ -138,14 +140,14 @@ always@(posedge fastClock)
 			begin
 				if (KEY[0] == 1'b0 && KEY[1] == 1'b0) 
 					P2y <= P2y;
-				else if (KEY[0] == 1'b0) begin //Moving down
-					if(P2y+P2_paddle_len >= 895)
+				else if (KEY[0] == 1'b0) begin
+					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the bottom of the screen
 						P2y <= 895-P2_paddle_len;
 					else
 					P2y <= P2y + P2_paddle_speed;
 				end
-				else if (KEY[1] == 1'b0) begin //Moving up
-					if(P2y <= 125)
+				else if (KEY[1] == 1'b0) begin
+					if(P2y <= 125) //Paddle makes it to the top of the screen
 						P2y <= 125;
 					else
 						P2y <= P2y - P2_paddle_speed;
@@ -156,21 +158,21 @@ always@(posedge fastClock)
 	end
 
 //Controls the top paddle
-//Using SW since KEYS are used up
+//Using SW since KEYS are used up - SW[5] to go left, SW[6] to go right
 always@(posedge fastClock)
 	begin
 		if (SW[0] == 1'b1 && game == 1) 
 			begin
 				if (SW[5] == 1'b0 && SW[6] == 1'b0) 
 					P3x <= P3x;
-				else if (KEY[5] == 1'b1) begin //Moving left
-					if(P3x <= 225)
+				else if (SW[5] == 1'b1) begin //Moving left
+					if(P3x <= 225) //Paddle makes it to the left of the area
 						P3x <= 225;
 					else
 					P3x <= P3x - P3_paddle_speed;
 				end
-				else if (KEY[6] == 1'b0) begin //Moving right
-					if(P3x+P3_paddle_len >= 1035)
+				else if (SW[6] == 1'b0) begin //Moving right
+					if(P3x+P3_paddle_len >= 1035) //Paddle makes it to the right of the area
 						P3x <= 1035-P3_paddle_len;
 					else
 						P3x <= P3x - P3_paddle_speed;
@@ -1176,6 +1178,12 @@ begin
 			greenValue <= 8'b11111111;
 		end
 		else if (XPixelPosition > P2x && XPixelPosition < P2x+10 && YPixelPosition > P2y && YPixelPosition < P2y+P2_paddle_len) // draw player 2 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
+		else if (XPixelPosition > P3x && XPixelPosition < P3x+P3_paddle_len && YPixelPosition > P3y && YPixelPosition < P3y+10)//Draw p3 paddle
 		begin
 			redValue <= 8'b00000000; 
 			blueValue <= 8'b11111111;
