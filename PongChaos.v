@@ -95,6 +95,8 @@ begin
 	fastClockCounter <= fastClockCounter + 1;
 end
 
+//-------------------------------------------------------------------------------------------------------------------------------
+//Controlling player movement
 //Controls the left paddle.
 always@(posedge fastClock)
 begin
@@ -146,6 +148,8 @@ always@(posedge fastClock)
 		P2y <= 500;
 	end
 
+//------------------------------------------------------------------------------------------------------------------------------
+//Ball movement
 //It controls the movement of the ball, balls position is (XDotPosition, YDotPosition)
 always@(posedge slowClock)
 begin
@@ -330,6 +334,7 @@ VGAFrequency VGAFreq (aresetPll, CLOCK_50, pixelClock);
 
 VGAController VGAControl (pixelClock, redValue, greenValue, blueValue, VGA_R, VGA_G, VGA_B, VGA_VS, VGA_HS, XPixelPosition, YPixelPosition);
 
+//---------------------------------------------------------------------------------------------------------------------------------------
 //For Drawing borders, players and ball to screen
 //XPixelPosition and YPixelPosition traverse the screen like in lab 6 and draw what it needs to when it hits certain spots
 //VGA pattern and charactor display
@@ -1182,6 +1187,7 @@ end
 
 endmodule
 
+//----------------------------------------------------------------------------------------------------------------------
 //VGA stuff probably not needed since vga_adapter from lab 6 is included
 
 // The VGAController is the source code
