@@ -36,7 +36,7 @@ reg	[7:0] greenValue;
 reg	[7:0] blueValue;
 reg	[2:0] movement = 0;
 reg	[3:0] tool = 0;
-reg [10:0] r = 10;
+reg [10:0] r = 10; //Radius of the ball
 reg [10:0] speed = 1;
 reg [10:0] P1_paddle_len = 125;
 reg [10:0] P2_paddle_len = 125;
