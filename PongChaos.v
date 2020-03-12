@@ -1213,6 +1213,12 @@ begin
 			blueValue <= 8'b11111111;
 			greenValue <= 8'b11111111;
 		end
+		else if (XPixelPosition > P4x && XPixelPosition < P4x+P4_paddle_len && YPixelPosition > P4y && YPixelPosition < P4y+10)//Draw p4 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
 		else if (((XPixelPosition- itemX)**2 
 						+ (YPixelPosition-itemY)**2) < 10**2 && drawItem == 1) 
 		begin
