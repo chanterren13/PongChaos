@@ -158,29 +158,53 @@ always@(posedge fastClock)
 	end
 
 //Controls the top paddle
-//Using SW since KEYS are used up - SW[5] to go left, SW[6] to go right
+//Using SW since KEYS are used up - SW[6] to go left, SW[5] to go right
 always@(posedge fastClock)
 	begin
 		if (SW[0] == 1'b1 && game == 1) 
 			begin
 				if (SW[5] == 1'b0 && SW[6] == 1'b0) 
 					P3x <= P3x;
-				else if (SW[5] == 1'b1) begin //Moving left
+				else if (SW[6] == 1'b1) begin //Moving left
 					if(P3x <= 225) //Paddle makes it to the left of the area
 						P3x <= 225;
 					else
 					P3x <= P3x - P3_paddle_speed;
 				end
-				else if (SW[6] == 1'b0) begin //Moving right
+				else if (SW[5] == 1'b1) begin //Moving right
 					if(P3x+P3_paddle_len >= 1035) //Paddle makes it to the right of the area
 						P3x <= 1035-P3_paddle_len;
 					else
-						P3x <= P3x - P3_paddle_speed;
+						P3x <= P3x + P3_paddle_speed;
 				end
 		end
 	else if (SW[0] == 1'b0) //Reset
 		P3x <= 567;
 	end
+
+//P4 Paddle SW[9] to go left SW[8] to go right
+always@(posedge fastClock)
+begin
+	if (SW[0] == 1'b1 && game == 1) 
+		begin
+			if (SW[8] == 1'b0 && SW[9] == 1'b0) 
+				P4x <= P4x;
+			else if (SW[9] == 1'b1) begin //Moving left
+				if(P4x <= 225) //Paddle makes it to the left of the area
+					P4x <= 225;
+				else
+				P4x <= P4x - P4_paddle_speed;
+			end
+			else if (SW[9] == 1'b1) begin //Moving right
+				if(P4x+P4_paddle_len >= 1035) //Paddle makes it to the right of the area
+					P4x <= 1035-P4_paddle_len;
+				else
+					P4x <= P4x + P4_paddle_speed;
+			end
+	end
+else if (SW[0] == 1'b0) //Reset
+	P4x <= 567;
+end
 
 //It controls the movement of the ball, (XDotPosition, YDotPosition)
 always@(posedge slowClock)
