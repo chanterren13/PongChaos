@@ -1,3 +1,5 @@
+
+//SW[0] and SW[1] in use
 module project(
 	CLOCK_50,
 	CLOCK2_50,
@@ -28,7 +30,9 @@ output VGA_SYNC_N;
 output VGA_VS;
 reg	aresetPll = 0;
 wire pixelClock;
+
 //Used for traversal of the screen to draw
+
 wire [10:0] XPixelPosition;
 wire [10:0] YPixelPosition; 
 reg	[7:0] redValue;
@@ -36,10 +40,12 @@ reg	[7:0] greenValue;
 reg	[7:0] blueValue;
 reg	[2:0] movement = 0;
 reg	[3:0] tool = 0;
-reg [10:0] r = 10; //Radius of the ball
+reg [10:0] r = 10;
 reg [10:0] speed = 1;
 reg [10:0] P1_paddle_len = 125;
 reg [10:0] P2_paddle_len = 125;
+reg [10:0] P3_paddle_len = 125;
+reg [10:0] P4_paddle_len = 125;
 reg [10:0] P1_paddle_speed = 5;
 reg [10:0] P2_paddle_speed = 5;
 reg [20:0] slowClockCounter = 0;
@@ -52,9 +58,16 @@ reg	[10:0] P1x = 225;
 reg	[10:0] P1y = 500;
 reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
+
+reg [10:0] P3x = 567; //midpoint of the field is 630 and paddle length is 125 -> 630 - (125/2) ~= 567
+reg [10:0] P3y = 125; //upper bound drawn at y = 125
+reg [10:0] P4x = 567;
+reg [10:0] P4y = 885; //lower bound drawn at y = 895 + 10 for the width of the paddle
 reg [3:0] P1Score = 0;
 reg	[3:0] P2Score = 0;
-reg game = 1; //Controls if it is in game state
+reg [3:0] P3Score = 0;
+reg [3:0] P4Score = 0;
+reg game =1; //Game control signal
 reg	[2:0] printer = 0;
 wire [9:0] randX;
 wire [9:0] randY;
@@ -111,10 +124,11 @@ begin
 					else
 						P1y <= P1y + P1_paddle_speed;
 				end
-			else if (KEY[3] == 1'b0)
+
+			else if (KEY[3] == 1'b0) 
 				begin
 					if(P1y <= 125) //Paddle makes it to the top of the area
-						P1y <= 125; 
+						P1y <= 125;
 					else
 						P1y <= P1y - P1_paddle_speed;
 				end
@@ -129,21 +143,78 @@ always@(posedge fastClock)
 	begin
 		if (SW[0] == 1'b1 && game ==1) 
 			begin
-				if (KEY[0] == 1'b0 && KEY[1] == 1'b0)
+				if (KEY[0] == 1'b0 && KEY[1] == 1'b0) 
 					P2y <= P2y;
 				else if (KEY[0] == 1'b0) begin
-					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the top of the screen
+					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the bottom of the screen
 						P2y <= 895-P2_paddle_len;
 					else
 					P2y <= P2y + P2_paddle_speed;
 				end
 				else if (KEY[1] == 1'b0) begin
-					if(P2y <= 125) //Paddle makes it to the bottom of the screen
+
+					if(P2y <= 125) //Paddle makes it to the top of the screen
 						P2y <= 125;
 					else
 						P2y <= P2y - P2_paddle_speed;
 				end
 		end
+
+	else if (SW[0] == 1'b0) //Reset
+		P2y <= 500;
+	end
+
+//Controls the top paddle
+//Using SW since KEYS are used up - SW[6] to go left, SW[5] to go right
+always@(posedge fastClock)
+	begin
+		if (SW[0] == 1'b1 && game == 1) 
+			begin
+				if (SW[5] == 1'b0 && SW[6] == 1'b0) 
+					P3x <= P3x;
+				else if (SW[6] == 1'b1) begin //Moving left
+					if(P3x <= 225) //Paddle makes it to the left of the area
+						P3x <= 225;
+					else
+					P3x <= P3x - P3_paddle_speed;
+				end
+				else if (SW[5] == 1'b1) begin //Moving right
+					if(P3x+P3_paddle_len >= 1035) //Paddle makes it to the right of the area
+						P3x <= 1035-P3_paddle_len;
+					else
+						P3x <= P3x + P3_paddle_speed;
+				end
+		end
+	else if (SW[0] == 1'b0) //Reset
+		P3x <= 567;
+	end
+
+//P4 Paddle SW[9] to go left SW[8] to go right
+always@(posedge fastClock)
+begin
+	if (SW[0] == 1'b1 && game == 1) 
+		begin
+			if (SW[8] == 1'b0 && SW[9] == 1'b0) 
+				P4x <= P4x;
+			else if (SW[9] == 1'b1) begin //Moving left
+				if(P4x <= 225) //Paddle makes it to the left of the area
+					P4x <= 225;
+				else
+				P4x <= P4x - P4_paddle_speed;
+			end
+			else if (SW[9] == 1'b1) begin //Moving right
+				if(P4x+P4_paddle_len >= 1035) //Paddle makes it to the right of the area
+					P4x <= 1035-P4_paddle_len;
+				else
+					P4x <= P4x + P4_paddle_speed;
+			end
+	end
+else if (SW[0] == 1'b0) //Reset
+	P4x <= 567;
+end
+
+//It controls the movement of the ball, (XDotPosition, YDotPosition)
+
 	else if (SW[0] == 1'b0)
 		P2y <= 500;
 	end
@@ -151,6 +222,7 @@ always@(posedge fastClock)
 //------------------------------------------------------------------------------------------------------------------------------
 //Ball movement
 //It controls the movement of the ball, balls position is (XDotPosition, YDotPosition)
+
 always@(posedge slowClock)
 begin
 	if (SW[0] == 1'b1 && game ==1)
@@ -304,7 +376,8 @@ begin
 					YDotPosition <= 512;
 				end
 				
-			if(P1Score == 10 || P2Score ==10)
+			if(P1Score == 10 || P2Score ==10) //Checking winners
+
 				begin
 					game <= 0;
 					if (P1Score == 10)
@@ -334,9 +407,11 @@ VGAFrequency VGAFreq (aresetPll, CLOCK_50, pixelClock);
 
 VGAController VGAControl (pixelClock, redValue, greenValue, blueValue, VGA_R, VGA_G, VGA_B, VGA_VS, VGA_HS, XPixelPosition, YPixelPosition);
 
+
 //---------------------------------------------------------------------------------------------------------------------------------------
 //For Drawing borders, players and ball to screen
 //XPixelPosition and YPixelPosition traverse the screen like in lab 6 and draw what it needs to when it hits certain spots
+
 //VGA pattern and charactor display
 always@ (posedge pixelClock)
 begin		
@@ -1153,6 +1228,19 @@ begin
 			blueValue <= 8'b11111111;
 			greenValue <= 8'b11111111;
 		end
+		else if (XPixelPosition > P3x && XPixelPosition < P3x+P3_paddle_len && YPixelPosition > P3y && YPixelPosition < P3y+10)//Draw p3 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
+		else if (XPixelPosition > P4x && XPixelPosition < P4x+P4_paddle_len && YPixelPosition > P4y && YPixelPosition < P4y+10)//Draw p4 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
+
 		else if (((XPixelPosition- itemX)**2 
 						+ (YPixelPosition-itemY)**2) < 10**2 && drawItem == 1) 
 		begin
@@ -1186,6 +1274,7 @@ begin
 end
 
 endmodule
+
 
 //----------------------------------------------------------------------------------------------------------------------
 //VGA stuff probably not needed since vga_adapter from lab 6 is included
@@ -1427,6 +1516,7 @@ module VGAFrequency (
 
 endmodule
 
+
 //The module find a random x and random y for the coordinate
 module RandomPoint(VGA_clk,randX, randY);
 	input VGA_clk;
@@ -1516,4 +1606,5 @@ module RandomTool(VGA_clk, rtool, color1, color2, color3);
 	begin
 		color3 <= colorp3;
 	end
+
 endmodule
