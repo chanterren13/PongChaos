@@ -159,19 +159,19 @@ begin
 			printer <= 0;
 			case(movement)
 				//Change the speed of ball by speed reg
-				0:		begin
+				0:		begin //moving up right
 							XDotPosition <= XDotPosition + speed;
 							YDotPosition <= YDotPosition - speed;
 						end
-				1:		begin
+				1:		begin //moving down right
 							XDotPosition <= XDotPosition + speed;
 							YDotPosition <= YDotPosition + speed;
 						end
-				2:		begin
+				2:		begin //moving up left
 							XDotPosition <= XDotPosition - speed;
 							YDotPosition <= YDotPosition + speed;
 						end
-				3:		begin
+				3:		begin //moving down left
 							XDotPosition <= XDotPosition - speed;
 							YDotPosition <= YDotPosition - speed;
 						end
@@ -247,13 +247,13 @@ begin
 			
 			//(XDotPosition, YDotPosition) represents the coordinate of the ball
 			// when the ball is in some range, change the movement.
-			if(YDotPosition - r <= 128 && movement == 0)
+			if(YDotPosition - r <= 128 && movement == 0) //ball hits the top of the area coming from the left
 				movement = 1;
-			else if (YDotPosition - r <= 128 && movement == 3)
+			else if (YDotPosition - r <= 128 && movement == 3) //ball hits the top of the area coming from the right
 				movement = 2;
-			else if (YDotPosition + r >= 896 && movement == 1)
+			else if (YDotPosition + r >= 896 && movement == 1) //ball hits the bottom of the area coming from left
 				movement = 0;
-			else if (YDotPosition + r >= 896 && movement == 2)
+			else if (YDotPosition + r >= 896 && movement == 2) //ball hits the bottom of the area coming from the right
 				movement = 3;
 			else if (XDotPosition - r <= P1x+10 && XDotPosition - r >= P1x+7 && YDotPosition > P1y && YDotPosition < P1y+P1_paddle_len &&  movement == 2)//bounce left paddle from SW
 				movement = 1;
