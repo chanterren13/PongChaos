@@ -1,4 +1,4 @@
-module PongChaos(
+module project(
 	CLOCK_50,
 	CLOCK2_50,
 	CLOCK3_50,
@@ -36,7 +36,7 @@ reg	[7:0] greenValue;
 reg	[7:0] blueValue;
 reg	[2:0] movement = 0;
 reg	[3:0] tool = 0;
-reg [10:0] r = 10; //Radius of the ball??
+reg [10:0] r = 10; //Radius of the ball
 reg [10:0] speed = 1;
 reg [10:0] P1_paddle_len = 125;
 reg [10:0] P2_paddle_len = 125;
@@ -132,13 +132,13 @@ always@(posedge fastClock)
 				if (KEY[0] == 1'b0 && KEY[1] == 1'b0)
 					P2y <= P2y;
 				else if (KEY[0] == 1'b0) begin
-					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the bottom of the screen
+					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the top of the screen
 						P2y <= 895-P2_paddle_len;
 					else
 					P2y <= P2y + P2_paddle_speed;
 				end
 				else if (KEY[1] == 1'b0) begin
-					if(P2y <= 125) //Paddle makes it to the top of the screen
+					if(P2y <= 125) //Paddle makes it to the bottom of the screen
 						P2y <= 125;
 					else
 						P2y <= P2y - P2_paddle_speed;
@@ -284,8 +284,8 @@ begin
 					else if (randomtool == 10 && (movement == 2 || movement == 3))
 						tool <= 9;
 					else
-//						tool <= randomtool;
-//						
+						tool <= randomtool;
+						
 					itemX <= randX;
 					itemY <= randY;
 					randomtool <= rtool;

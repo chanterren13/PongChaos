@@ -1,0 +1,149 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -18.929
+TNS   : -431.236
+
+Type  : Slow 1200mV 85C Model Setup 'slowClockCounter[16]'
+Slack : -8.008
+TNS   : -756.694
+
+Type  : Slow 1200mV 85C Model Setup 'fastClockCounter[17]'
+Slack : -4.303
+TNS   : -89.010
+
+Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
+Slack : -1.432
+TNS   : -2.680
+
+Type  : Slow 1200mV 85C Model Hold 'slowClockCounter[16]'
+Slack : 0.384
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.402
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
+Slack : 0.407
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'fastClockCounter[17]'
+Slack : 0.826
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'slowClockCounter[16]'
+Slack : -1.285
+TNS   : -150.345
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'fastClockCounter[17]'
+Slack : -1.285
+TNS   : -28.270
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 4.323
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
+Slack : 9.681
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -17.139
+TNS   : -389.569
+
+Type  : Slow 1200mV 0C Model Setup 'slowClockCounter[16]'
+Slack : -7.163
+TNS   : -672.913
+
+Type  : Slow 1200mV 0C Model Setup 'fastClockCounter[17]'
+Slack : -3.851
+TNS   : -78.983
+
+Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -1.284
+TNS   : -2.398
+
+Type  : Slow 1200mV 0C Model Hold 'slowClockCounter[16]'
+Slack : 0.337
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.354
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
+Slack : 0.365
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'fastClockCounter[17]'
+Slack : 0.760
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'slowClockCounter[16]'
+Slack : -1.285
+TNS   : -150.345
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'fastClockCounter[17]'
+Slack : -1.285
+TNS   : -28.270
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 4.316
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : 9.690
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -9.589
+TNS   : -218.445
+
+Type  : Fast 1200mV 0C Model Setup 'slowClockCounter[16]'
+Slack : -3.379
+TNS   : -311.048
+
+Type  : Fast 1200mV 0C Model Setup 'fastClockCounter[17]'
+Slack : -1.615
+TNS   : -32.197
+
+Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -0.598
+TNS   : -1.122
+
+Type  : Fast 1200mV 0C Model Hold 'slowClockCounter[16]'
+Slack : 0.173
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.181
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
+Slack : 0.188
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'fastClockCounter[17]'
+Slack : 0.374
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'slowClockCounter[16]'
+Slack : -1.000
+TNS   : -117.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'fastClockCounter[17]'
+Slack : -1.000
+TNS   : -22.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'VGAFreq|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 4.410
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : 9.265
+TNS   : 0.000
+
+------------------------------------------------------------

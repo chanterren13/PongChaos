@@ -1,0 +1,19 @@
+
+State Machine - |PongChaos|movement
+Name movement.011 movement.010 movement.001 movement.000 
+movement.000 0 0 0 0 
+movement.001 0 0 1 1 
+movement.010 0 1 0 1 
+movement.011 1 0 0 1 
+
+State Machine - |PongChaos|drawItem
+Name drawItem.01 
+drawItem.00 0 
+drawItem.01 1 
+
+State Machine - |PongChaos|printer
+Name printer.011 printer.010 printer.001 printer.000 
+printer.000 0 0 0 0 
+printer.001 0 0 1 1 
+printer.010 0 1 0 1 
+printer.011 1 0 0 1 

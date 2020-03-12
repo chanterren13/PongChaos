@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at PongChaos.v(154): always construct contains both blocking and non-blocking assignments File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 154
