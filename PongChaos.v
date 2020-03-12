@@ -1,5 +1,5 @@
-//SW[0] and SW[1] in use
 
+//SW[0] and SW[1] in use
 module project(
 	CLOCK_50,
 	CLOCK2_50,
@@ -30,6 +30,9 @@ output VGA_SYNC_N;
 output VGA_VS;
 reg	aresetPll = 0;
 wire pixelClock;
+
+//Used for traversal of the screen to draw
+
 wire [10:0] XPixelPosition;
 wire [10:0] YPixelPosition; 
 reg	[7:0] redValue;
@@ -55,6 +58,7 @@ reg	[10:0] P1x = 225;
 reg	[10:0] P1y = 500;
 reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
+
 reg [10:0] P3x = 567; //midpoint of the field is 630 and paddle length is 125 -> 630 - (125/2) ~= 567
 reg [10:0] P3y = 125; //upper bound drawn at y = 125
 reg [10:0] P4x = 567;
@@ -104,9 +108,9 @@ begin
 	fastClockCounter <= fastClockCounter + 1;
 end
 
-//------------------------------------------------------------------------------------------------------
-//Controlling Player Movement
-//it controls the left paddle.
+//-------------------------------------------------------------------------------------------------------------------------------
+//Controlling player movement
+//Controls the left paddle.
 always@(posedge fastClock)
 begin
 	if (SW[0] == 1'b1 && game == 1) 
@@ -120,6 +124,7 @@ begin
 					else
 						P1y <= P1y + P1_paddle_speed;
 				end
+
 			else if (KEY[3] == 1'b0) 
 				begin
 					if(P1y <= 125) //Paddle makes it to the top of the area
@@ -147,12 +152,14 @@ always@(posedge fastClock)
 					P2y <= P2y + P2_paddle_speed;
 				end
 				else if (KEY[1] == 1'b0) begin
+
 					if(P2y <= 125) //Paddle makes it to the top of the screen
 						P2y <= 125;
 					else
 						P2y <= P2y - P2_paddle_speed;
 				end
 		end
+
 	else if (SW[0] == 1'b0) //Reset
 		P2y <= 500;
 	end
@@ -207,6 +214,15 @@ else if (SW[0] == 1'b0) //Reset
 end
 
 //It controls the movement of the ball, (XDotPosition, YDotPosition)
+
+	else if (SW[0] == 1'b0)
+		P2y <= 500;
+	end
+
+//------------------------------------------------------------------------------------------------------------------------------
+//Ball movement
+//It controls the movement of the ball, balls position is (XDotPosition, YDotPosition)
+
 always@(posedge slowClock)
 begin
 	if (SW[0] == 1'b1 && game ==1)
@@ -215,19 +231,19 @@ begin
 			printer <= 0;
 			case(movement)
 				//Change the speed of ball by speed reg
-				0:		begin
+				0:		begin //moving up right
 							XDotPosition <= XDotPosition + speed;
 							YDotPosition <= YDotPosition - speed;
 						end
-				1:		begin
+				1:		begin //moving down right
 							XDotPosition <= XDotPosition + speed;
 							YDotPosition <= YDotPosition + speed;
 						end
-				2:		begin
+				2:		begin //moving up left
 							XDotPosition <= XDotPosition - speed;
 							YDotPosition <= YDotPosition + speed;
 						end
-				3:		begin
+				3:		begin //moving down left
 							XDotPosition <= XDotPosition - speed;
 							YDotPosition <= YDotPosition - speed;
 						end
@@ -238,6 +254,7 @@ begin
 			endcase
 			
 			//It runs the changes of ball or paddle randomly
+			//tool is something????
 			//When the ball meet the tool random point
 			case(tool)
 				0:		begin 
@@ -302,13 +319,13 @@ begin
 			
 			//(XDotPosition, YDotPosition) represents the coordinate of the ball
 			// when the ball is in some range, change the movement.
-			if(YDotPosition - r <= 128 && movement == 0)
+			if(YDotPosition - r <= 128 && movement == 0) //ball hits the top of the area coming from the left
 				movement = 1;
-			else if (YDotPosition - r <= 128 && movement == 3)
+			else if (YDotPosition - r <= 128 && movement == 3) //ball hits the top of the area coming from the right
 				movement = 2;
-			else if (YDotPosition + r >= 896 && movement == 1)
+			else if (YDotPosition + r >= 896 && movement == 1) //ball hits the bottom of the area coming from left
 				movement = 0;
-			else if (YDotPosition + r >= 896 && movement == 2)
+			else if (YDotPosition + r >= 896 && movement == 2) //ball hits the bottom of the area coming from the right
 				movement = 3;
 			else if (XDotPosition - r <= P1x+10 && XDotPosition - r >= P1x+7 && YDotPosition > P1y && YDotPosition < P1y+P1_paddle_len &&  movement == 2)//bounce left paddle from SW
 				movement = 1;
@@ -346,7 +363,7 @@ begin
 					randomtool <= rtool;
 					drawItem <= 0;
 				end
-			else if (XDotPosition - r <= 160)
+			else if (XDotPosition - r <= 160) //Controlling scores when the ball goes off screen
 				begin
 					P2Score = P2Score + 1;
 					XDotPosition <= 640;
@@ -360,6 +377,7 @@ begin
 				end
 				
 			if(P1Score == 10 || P2Score ==10) //Checking winners
+
 				begin
 					game <= 0;
 					if (P1Score == 10)
@@ -390,7 +408,10 @@ VGAFrequency VGAFreq (aresetPll, CLOCK_50, pixelClock);
 VGAController VGAControl (pixelClock, redValue, greenValue, blueValue, VGA_R, VGA_G, VGA_B, VGA_VS, VGA_HS, XPixelPosition, YPixelPosition);
 
 
-// ALL FOR DRAWING ON THE SCREEN
+//---------------------------------------------------------------------------------------------------------------------------------------
+//For Drawing borders, players and ball to screen
+//XPixelPosition and YPixelPosition traverse the screen like in lab 6 and draw what it needs to when it hits certain spots
+
 //VGA pattern and charactor display
 always@ (posedge pixelClock)
 begin		
@@ -1219,6 +1240,7 @@ begin
 			blueValue <= 8'b11111111;
 			greenValue <= 8'b11111111;
 		end
+
 		else if (((XPixelPosition- itemX)**2 
 						+ (YPixelPosition-itemY)**2) < 10**2 && drawItem == 1) 
 		begin
@@ -1252,6 +1274,248 @@ begin
 end
 
 endmodule
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//VGA stuff probably not needed since vga_adapter from lab 6 is included
+
+// The VGAController is the source code
+// This is a controller written for a VGA Monitor with resolution 1280 by 1024 with an refresh rate of 60 fps
+// VGA Controller use to generate signals for the monitor 
+module VGAController (PixelClock,
+							 inRed,
+							 inGreen,
+							 inBlue,
+							 outRed,
+							 outGreen,
+							 outBlue,
+							 VertSynchOut,
+							 HorSynchOut,
+							 XPosition,
+							 YPosition);
+//======================================================= 
+// Parameter Declarations 				
+//=======================================================
+// Parameters are set for a 1280 by 1024 pixel monitor running at 60 frames per second
+// X Screen Constants	 
+parameter XLimit = 1688;
+parameter XVisible = 1280;
+parameter XSynchPulse = 112;
+parameter XBackPorch = 248;
+// Y Screen Constants
+parameter YLimit = 1066;
+parameter YVisible = 1024;
+parameter YSynchPulse = 3;
+parameter YBackPorch = 38;
+
+//=======================================================			 
+// Port Declarations 				
+//=======================================================
+input PixelClock;
+input [7:0] inRed;
+input [7:0] inGreen;
+input [7:0] inBlue;
+output [7:0] outRed;
+output [7:0] outGreen;
+output [7:0] outBlue;
+output VertSynchOut;
+output HorSynchOut;
+output [10:0] XPosition;
+output [10:0] YPosition;
+
+//========================================================
+// REG/WIRE declarations
+//========================================================
+
+reg [10:0] XTiming;
+reg [10:0] YTiming;
+reg HorSynch;
+reg VertSynch;
+
+//========================================================
+// Structural coding
+//========================================================
+assign XPosition = XTiming - (XSynchPulse + XBackPorch);
+assign YPosition = YTiming - (YSynchPulse + YBackPorch);
+
+
+always@(posedge PixelClock)// Control X Timing
+begin
+	if (XTiming >= XLimit)
+		XTiming <= 11'd0;
+	else
+		XTiming <= XTiming + 1;
+end
+	
+always@(posedge PixelClock)// Control Y Timing
+begin
+	if (YTiming >= YLimit && XTiming >= XLimit)
+		YTiming <= 11'd0;
+	else if (XTiming >= XLimit && YTiming < YLimit)
+		YTiming <= YTiming + 1;
+	else
+		YTiming <= YTiming;
+end
+
+always@(posedge PixelClock)// Control Vertical Synch Signal
+begin
+	if (YTiming >= 0 && YTiming < YSynchPulse)
+		VertSynch <= 1'b0;
+	else
+		VertSynch <= 1'b1;
+end
+	
+always@(posedge PixelClock)// Control Horizontal Synch Signal
+begin
+	if (XTiming >= 0 && XTiming < XSynchPulse)
+		HorSynch <= 1'b0;
+	else
+		HorSynch <= 1'b1;
+end
+	
+// Draw black in off screen areas of screen
+assign outRed = (XTiming >= (XSynchPulse + XBackPorch) && XTiming <= (XSynchPulse + XBackPorch + XVisible)) ? inRed : 8'b0;
+assign outGreen = (XTiming >= (XSynchPulse + XBackPorch) && XTiming <= (XSynchPulse + XBackPorch + XVisible)) ? inGreen : 8'b0;
+assign outBlue = (XTiming >= (XSynchPulse + XBackPorch) && XTiming <= (XSynchPulse + XBackPorch + XVisible)) ? inBlue : 8'b0;
+
+assign VertSynchOut = VertSynch;
+assign HorSynchOut = HorSynch;
+
+
+// Initialization registers block
+initial
+begin
+	XTiming = 11'b0;
+	YTiming = 11'b0;
+	HorSynch = 1'b1;
+	VertSynch = 1'b1;
+end
+	
+	
+endmodule 
+
+`timescale 1 ps / 1 ps
+// The VGAFrequency is the source code
+module VGAFrequency (
+	areset,
+	inclk0,
+	c0);
+
+	input	  areset;
+	input	  inclk0;
+	output	  c0;
+`ifndef ALTERA_RESERVED_QIS
+// synopsys translate_off
+`endif
+	tri0	  areset;
+`ifndef ALTERA_RESERVED_QIS
+// synopsys translate_on
+`endif
+
+	wire [0:0] sub_wire2 = 1'h0;
+	wire [4:0] sub_wire3;
+	wire  sub_wire0 = inclk0;
+	wire [1:0] sub_wire1 = {sub_wire2, sub_wire0};
+	wire [0:0] sub_wire4 = sub_wire3[0:0];
+	wire  c0 = sub_wire4;
+
+	altpll	altpll_component (
+				.areset (areset),
+				.inclk (sub_wire1),
+				.clk (sub_wire3),
+				.activeclock (),
+				.clkbad (),
+				.clkena ({6{1'b1}}),
+				.clkloss (),
+				.clkswitch (1'b0),
+				.configupdate (1'b0),
+				.enable0 (),
+				.enable1 (),
+				.extclk (),
+				.extclkena ({4{1'b1}}),
+				.fbin (1'b1),
+				.fbmimicbidir (),
+				.fbout (),
+				.fref (),
+				.icdrclk (),
+				.locked (),
+				.pfdena (1'b1),
+				.phasecounterselect ({4{1'b1}}),
+				.phasedone (),
+				.phasestep (1'b1),
+				.phaseupdown (1'b1),
+				.pllena (1'b1),
+				.scanaclr (1'b0),
+				.scanclk (1'b0),
+				.scanclkena (1'b1),
+				.scandata (1'b0),
+				.scandataout (),
+				.scandone (),
+				.scanread (1'b0),
+				.scanwrite (1'b0),
+				.sclkout0 (),
+				.sclkout1 (),
+				.vcooverrange (),
+				.vcounderrange ());
+	defparam
+		altpll_component.bandwidth_type = "AUTO",
+		altpll_component.clk0_divide_by = 25,
+		altpll_component.clk0_duty_cycle = 50,
+		altpll_component.clk0_multiply_by = 54,
+		altpll_component.clk0_phase_shift = "0",
+		altpll_component.compensate_clock = "CLK0",
+		altpll_component.inclk0_input_frequency = 20000,
+		altpll_component.intended_device_family = "Cyclone IV E",
+		altpll_component.lpm_hint = "CBX_MODULE_PREFIX=VGAFrequency",
+		altpll_component.lpm_type = "altpll",
+		altpll_component.operation_mode = "NORMAL",
+		altpll_component.pll_type = "AUTO",
+		altpll_component.port_activeclock = "PORT_UNUSED",
+		altpll_component.port_areset = "PORT_USED",
+		altpll_component.port_clkbad0 = "PORT_UNUSED",
+		altpll_component.port_clkbad1 = "PORT_UNUSED",
+		altpll_component.port_clkloss = "PORT_UNUSED",
+		altpll_component.port_clkswitch = "PORT_UNUSED",
+		altpll_component.port_configupdate = "PORT_UNUSED",
+		altpll_component.port_fbin = "PORT_UNUSED",
+		altpll_component.port_inclk0 = "PORT_USED",
+		altpll_component.port_inclk1 = "PORT_UNUSED",
+		altpll_component.port_locked = "PORT_UNUSED",
+		altpll_component.port_pfdena = "PORT_UNUSED",
+		altpll_component.port_phasecounterselect = "PORT_UNUSED",
+		altpll_component.port_phasedone = "PORT_UNUSED",
+		altpll_component.port_phasestep = "PORT_UNUSED",
+		altpll_component.port_phaseupdown = "PORT_UNUSED",
+		altpll_component.port_pllena = "PORT_UNUSED",
+		altpll_component.port_scanaclr = "PORT_UNUSED",
+		altpll_component.port_scanclk = "PORT_UNUSED",
+		altpll_component.port_scanclkena = "PORT_UNUSED",
+		altpll_component.port_scandata = "PORT_UNUSED",
+		altpll_component.port_scandataout = "PORT_UNUSED",
+		altpll_component.port_scandone = "PORT_UNUSED",
+		altpll_component.port_scanread = "PORT_UNUSED",
+		altpll_component.port_scanwrite = "PORT_UNUSED",
+		altpll_component.port_clk0 = "PORT_USED",
+		altpll_component.port_clk1 = "PORT_UNUSED",
+		altpll_component.port_clk2 = "PORT_UNUSED",
+		altpll_component.port_clk3 = "PORT_UNUSED",
+		altpll_component.port_clk4 = "PORT_UNUSED",
+		altpll_component.port_clk5 = "PORT_UNUSED",
+		altpll_component.port_clkena0 = "PORT_UNUSED",
+		altpll_component.port_clkena1 = "PORT_UNUSED",
+		altpll_component.port_clkena2 = "PORT_UNUSED",
+		altpll_component.port_clkena3 = "PORT_UNUSED",
+		altpll_component.port_clkena4 = "PORT_UNUSED",
+		altpll_component.port_clkena5 = "PORT_UNUSED",
+		altpll_component.port_extclk0 = "PORT_UNUSED",
+		altpll_component.port_extclk1 = "PORT_UNUSED",
+		altpll_component.port_extclk2 = "PORT_UNUSED",
+		altpll_component.port_extclk3 = "PORT_UNUSED",
+		altpll_component.width_clock = 5;
+
+
+endmodule
+
 
 //The module find a random x and random y for the coordinate
 module RandomPoint(VGA_clk,randX, randY);
@@ -1342,4 +1606,5 @@ module RandomTool(VGA_clk, rtool, color1, color2, color3);
 	begin
 		color3 <= colorp3;
 	end
+
 endmodule
