@@ -65,11 +65,35 @@ Weekly Reports
 
 
 
-[This is an example of a report where things didn't go so well.]
-Week 1: 
-        We added and tested the sensors and the main FSM. 
-        The distance sensor we had intended to use didn't work as expected (wasn't precise enough at further distances, only seems to work accurately within 5-10cm), so instead we've decided to change the project to use a light sensor instead.
-        Had trouble getting the FSM to work (kept getting stuck in state 101, took longer to debug than expected), so we may not be able to add the high score feature. We have updated that in the project description as an optional feature.
+Week 1: This week we were able to implement 4 player compatibility into the code base. Before our first lab for our project we were able to modify the existing code base for a 2 player game and implement another
+2 player game happening in the vertical orientation of the game screen. Once the paddles were drawn, we were able to implement movement for them (I.e, along the horizontal axis). Then we implemented a ball for the second
+game in a different colour and assigned a different starting position for it (in fact we had to implement new attributes for the second ball as the two game balls are independent of each other). With the new implementation of the paddles
+and game ball (ball2), we implemented collision detection between the old ball (ball1) and the new paddles. We also implemented collision detection between the ball and the arena (the ball stays on the screen) as well as collision
+detection between the ball and the new player paddles. Collision detection between the new ball and the old paddles was also implemented. Ball to ball collision was also implemented. In essence everything that was intended to be done
+within our first week was complete. We now have our core features for our 4 player game.
+
+
+We have also configured controls for all players as follows:
+Game mode: SW0- play mode when value is 1 and reset mode when value is 0
+P1 controls:
+Key3- Up
+Key2- Down
+SW0- projectile launch on high value (set to 0 after projectile launched)
+P2 controls:
+Key1- Up
+Key0- Down
+SW3- projectile launch on high value (set to 0 after projectile launched)
+P3 controls:
+SW17- up(when value is 1), down(when value is 0)
+SW16- stationary (when value is 1- disregards SW7), refers controls to SW7 (when value is 0)
+SW15- projectile launch on high value (set to 0 after projectile launched)
+P4 controls:
+SW10- up(when value is 1), down(when value is 0)
+SW9- stationary (when value is 1- disregards SW10), refers controls to SW10 (when value is 0)
+SW8- projectile launch on high value (set to 0 after projectile launched)
+
+
+For next week: we plan on implementing a similar scoreboard scheme to our new players as well as finalizing game details such as what happens when one game is over and the other is not.
 
 
 
