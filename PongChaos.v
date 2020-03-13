@@ -1,4 +1,7 @@
+
 module PongChaos(
+
+//SW[0] and SW[1] in use
 	CLOCK_50,
 	CLOCK2_50,
 	CLOCK3_50,
@@ -28,33 +31,48 @@ output VGA_SYNC_N;
 output VGA_VS;
 reg	aresetPll = 0;
 wire pixelClock;
+
 //Used for traversal of the screen to draw
+
 wire [10:0] XPixelPosition;
 wire [10:0] YPixelPosition; 
 reg	[7:0] redValue;
 reg	[7:0] greenValue;
 reg	[7:0] blueValue;
-reg	[2:0] movement = 0;
+reg	[2:0] hmovement = 0;
+reg [2:0] vmovement = 0;
 reg	[3:0] tool = 0;
 reg [10:0] r = 10; //Radius of the ball??
 reg [10:0] speed = 1;
 reg [10:0] P1_paddle_len = 125;
 reg [10:0] P2_paddle_len = 125;
+reg [10:0] P3_paddle_len = 125;
+reg [10:0] P4_paddle_len = 125;
 reg [10:0] P1_paddle_speed = 5;
 reg [10:0] P2_paddle_speed = 5;
+reg [10:0] P3_paddle_speed = 5;
+reg [10:0] P4_paddle_speed = 5;
 reg [20:0] slowClockCounter = 0;
 wire slowClock;
 reg [20:0] fastClockCounter = 0;
 wire fastClock;
-reg	[10:0] XDotPosition = 500;
-reg	[10:0] YDotPosition = 500; 
+reg	[10:0] X1DotPosition = 500;
+reg	[10:0] Y1DotPosition = 500; 
+reg	[10:0] X2DotPosition = 750;
+reg	[10:0] Y2DotPosition = 450;
 reg	[10:0] P1x = 225;
 reg	[10:0] P1y = 500;
 reg	[10:0] P2x = 1030;
 reg	[10:0] P2y = 500;
+reg [10:0] P3x = 567; //midpoint of the field is 630 and paddle length is 125 -> 630 - (125/2) ~= 567
+reg [10:0] P3y = 195; //upper bound drawn at y = 125
+reg [10:0] P4x = 567;
+reg [10:0] P4y = 815; //lower bound drawn at y = 895 
 reg [3:0] P1Score = 0;
 reg	[3:0] P2Score = 0;
-reg game = 1; //Controls if it is in game state
+reg [3:0] P3Score = 0;
+reg [3:0] P4Score = 0;
+reg game =1; //Game control signal
 reg	[2:0] printer = 0;
 wire [9:0] randX;
 wire [9:0] randY;
@@ -98,86 +116,162 @@ end
 //-------------------------------------------------------------------------------------------------------------------------------
 //Controlling player movement
 //Controls the left paddle.
+//always@(posedge fastClock)
+//begin
+//	if (SW[0] == 1'b1 && game == 1) 
+//		begin
+//			if (KEY[2] == 1'b0 && KEY[3] == 1'b0) 
+//				P1y <= P1y;
+//			else if (KEY[2] == 1'b0)
+//				begin
+//					if (P1y+P1_paddle_len >= 895) //Paddle makes it to the bottom of the area
+//						P1y <= 895-P1_paddle_len;
+//					else
+//						P1y <= P1y + P1_paddle_speed;
+//				end
+//
+//			else if (KEY[3] == 1'b0) 
+//				begin
+//					if(P1y <= 125) //Paddle makes it to the top of the area
+//						P1y <= 125;
+//					else
+//						P1y <= P1y - P1_paddle_speed;
+//				end
+//		end
+//	
+//	else if (SW[0] == 1'b0) //Reset
+//		P1y <= 500;
+//end
+//
+////it controls the right paddle
+//always@(posedge fastClock)
+//	begin
+//		if (SW[0] == 1'b1 && game ==1) 
+//			begin
+//				if (KEY[0] == 1'b0 && KEY[1] == 1'b0) 
+//					P2y <= P2y;
+//				else if (KEY[0] == 1'b0) begin
+//					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the bottom of the screen
+//						P2y <= 895-P2_paddle_len;
+//					else
+//					P2y <= P2y + P2_paddle_speed;
+//				end
+//				else if (KEY[1] == 1'b0) begin
+//					if(P2y <= 125) //Paddle makes it to the top of the screen
+//						P2y <= 125;
+//					else
+//						P2y <= P2y - P2_paddle_speed;
+//				end
+//		end
+//
+//	else if (SW[0] == 1'b0) //Reset
+//		P2y <= 500;
+//	end
+
+//Controls the top paddle
+//Using SW since KEYS are used up - SW[6] to go left, SW[5] to go right
+always@(posedge fastClock)
+	begin
+		if (SW[0] == 1'b1 && game == 1) 
+			begin
+				if (KEY[0] == 1'b0 && KEY[1] == 1'b0) 
+					P3x <= P3x;
+				else if (KEY[1] == 1'b0) begin //Moving left
+					if(P3x <= 165) //Paddle makes it to the left of the area
+						P3x <= 165;
+					else
+					P3x <= P3x - P3_paddle_speed;
+				end
+				else if (KEY[0] == 1'b0) begin //Moving right
+					if(P3x+P3_paddle_len >= 1110) //Paddle makes it to the right of the area
+						P3x <= 1110-P3_paddle_len;
+					else
+						P3x <= P3x + P3_paddle_speed;
+				end
+		end
+	else if (SW[0] == 1'b0) //Reset
+		P3x <= 567;
+	end
+
+//P4 Paddle SW[9] to go left SW[8] to go right
 always@(posedge fastClock)
 begin
 	if (SW[0] == 1'b1 && game == 1) 
 		begin
 			if (KEY[2] == 1'b0 && KEY[3] == 1'b0) 
-				P1y <= P1y;
-			else if (KEY[2] == 1'b0)
-				begin
-					if (P1y+P1_paddle_len >= 895) //Paddle makes it to the bottom of the area
-						P1y <= 895-P1_paddle_len;
-					else
-						P1y <= P1y + P1_paddle_speed;
-				end
-			else if (KEY[3] == 1'b0)
-				begin
-					if(P1y <= 125) //Paddle makes it to the top of the area
-						P1y <= 125; 
-					else
-						P1y <= P1y - P1_paddle_speed;
-				end
-		end
-	
-	else if (SW[0] == 1'b0) //Reset
-		P1y <= 500;
-end
-
-//it controls the right paddle
-always@(posedge fastClock)
-	begin
-		if (SW[0] == 1'b1 && game ==1) 
-			begin
-				if (KEY[0] == 1'b0 && KEY[1] == 1'b0)
-					P2y <= P2y;
-				else if (KEY[0] == 1'b0) begin
-					if(P2y+P2_paddle_len >= 895) //Paddle makes it to the bottom of the screen
-						P2y <= 895-P2_paddle_len;
-					else
-					P2y <= P2y + P2_paddle_speed;
-				end
-				else if (KEY[1] == 1'b0) begin
-					if(P2y <= 125) //Paddle makes it to the top of the screen
-						P2y <= 125;
-					else
-						P2y <= P2y - P2_paddle_speed;
-				end
-		end
-	else if (SW[0] == 1'b0)
-		P2y <= 500;
+				P4x <= P4x;
+			else if (KEY[3] == 1'b0) begin //Moving left
+				if(P4x <= 165) //Paddle makes it to the left of the area
+					P4x <= 165;
+				else
+				P4x <= P4x - P4_paddle_speed;
+			end
+			else if (KEY[2] == 1'b0) begin //Moving right
+				if(P4x+P4_paddle_len >= 1110) //Paddle makes it to the right of the area
+					P4x <= 1110-P4_paddle_len;
+				else
+					P4x <= P4x + P4_paddle_speed;
+			end
 	end
+else if (SW[0] == 1'b0) //Reset
+	P4x <= 567;
 
+end
 //------------------------------------------------------------------------------------------------------------------------------
 //Ball movement
-//It controls the movement of the ball, balls position is (XDotPosition, YDotPosition)
+//It controls the movement of the ball, horizontal balls position is (X1DotPosition, Y1DotPosition), veritcal ball is (X2DotPosition, Y2DotPosition)
+
 always@(posedge slowClock)
 begin
 	if (SW[0] == 1'b1 && game ==1)
 		begin
 			clock <= clock + 1;
 			printer <= 0;
-			case(movement)
+			case(hmovement)
 				//Change the speed of ball by speed reg
 				0:		begin //moving up right
-							XDotPosition <= XDotPosition + speed;
-							YDotPosition <= YDotPosition - speed;
+							X1DotPosition <= X1DotPosition + speed;
+							Y1DotPosition <= Y1DotPosition - speed;
 						end
 				1:		begin //moving down right
-							XDotPosition <= XDotPosition + speed;
-							YDotPosition <= YDotPosition + speed;
+							X1DotPosition <= X1DotPosition + speed;
+							Y1DotPosition <= Y1DotPosition + speed;
 						end
-				2:		begin //moving up left
-							XDotPosition <= XDotPosition - speed;
-							YDotPosition <= YDotPosition + speed;
+				2:		begin //moving down left
+							X1DotPosition <= X1DotPosition - speed;
+							Y1DotPosition <= Y1DotPosition + speed;
 						end
-				3:		begin //moving down left
-							XDotPosition <= XDotPosition - speed;
-							YDotPosition <= YDotPosition - speed;
+				3:		begin //moving up left
+							X1DotPosition <= X1DotPosition - speed;
+							Y1DotPosition <= Y1DotPosition - speed;
 						end
 				default:	begin
-								XDotPosition <= XDotPosition + speed;
-								YDotPosition <= YDotPosition - speed;
+								X1DotPosition <= X1DotPosition + speed;
+								Y1DotPosition <= Y1DotPosition - speed;
+							end
+			endcase
+			
+			case(vmovement)
+				//Change the speed of ball by speed reg
+				0:		begin //moving down left
+							X2DotPosition <= X2DotPosition - speed;
+							Y2DotPosition <= Y2DotPosition + speed;
+						end
+				1:		begin //moving down right
+							X2DotPosition <= X2DotPosition + speed;
+							Y2DotPosition <= Y2DotPosition + speed;
+						end
+				2:		begin //moving up right
+							X2DotPosition <= X2DotPosition + speed;
+							Y2DotPosition <= Y2DotPosition - speed;
+						end
+				3:		begin //moving up left
+							X2DotPosition <= X2DotPosition - speed;
+							Y2DotPosition <= Y2DotPosition - speed;
+						end
+				default:	begin
+								X2DotPosition <= X2DotPosition + speed;
+								Y2DotPosition <= Y2DotPosition - speed;
 							end
 			endcase
 			
@@ -245,43 +339,59 @@ begin
 						end
 			endcase
 			
-			//(XDotPosition, YDotPosition) represents the coordinate of the ball
+			//(X1DotPosition, Y1DotPosition) represents the coordinate of horizontal ball
 			// when the ball is in some range, change the movement.
-			if(YDotPosition - r <= 128 && movement == 0) //ball hits the top of the area coming from the left
-				movement = 1;
-			else if (YDotPosition - r <= 128 && movement == 3) //ball hits the top of the area coming from the right
-				movement = 2;
-			else if (YDotPosition + r >= 896 && movement == 1) //ball hits the bottom of the area coming from left
-				movement = 0;
-			else if (YDotPosition + r >= 896 && movement == 2) //ball hits the bottom of the area coming from the right
-				movement = 3;
-			else if (XDotPosition - r <= P1x+10 && XDotPosition - r >= P1x+7 && YDotPosition > P1y && YDotPosition < P1y+P1_paddle_len &&  movement == 2)//bounce left paddle from SW
-				movement = 1;
-			else if (XDotPosition - r <= P1x+10 && XDotPosition - r >= P1x+7 && YDotPosition > P1y && YDotPosition < P1y+P1_paddle_len &&  movement == 3)//bounce left paddle from NW
-				movement = 0;
-			else if (XDotPosition + r >= P2x && XDotPosition + r <= P2x + 3 && YDotPosition > P2y && YDotPosition < P2y+P2_paddle_len &&  movement == 1)//bounce right paddle from SE 
-				movement = 2;
-			else if (XDotPosition + r >= P2x && XDotPosition + r <= P2x + 3 && YDotPosition > P2y && YDotPosition < P2y+P2_paddle_len &&  movement == 0)//bounce right paddle from NE
-				movement = 3;
-			else if (XDotPosition + r >= itemX - r && XDotPosition - r <= itemX + r && YDotPosition + r >= itemY - r && YDotPosition - r <= itemY + r && drawItem == 1)// ball hit the item
+			if(Y1DotPosition - r <= 128 && hmovement == 0) //ball hits the top of the area coming from the left
+				hmovement = 1;
+			else if (Y1DotPosition - r <= 128 && hmovement == 3) //ball hits the top of the area coming from the right
+				hmovement = 2;
+			else if (Y1DotPosition + r >= 896 && hmovement == 1) //ball hits the bottom of the area coming from left
+				hmovement = 0;
+			else if (Y1DotPosition + r >= 896 && hmovement == 2) //ball hits the bottom of the area coming from the right
+				hmovement = 3;
+			else if (X1DotPosition - r <= P1x+10 && X1DotPosition - r >= P1x+7 && Y1DotPosition > P1y && Y1DotPosition < P1y+P1_paddle_len &&  hmovement == 2)//bounce left paddle from SW
+				hmovement = 1;
+			else if (X1DotPosition - r <= P1x+10 && X1DotPosition - r >= P1x+7 && Y1DotPosition > P1y && Y1DotPosition < P1y+P1_paddle_len &&  hmovement == 3)//bounce left paddle from NW
+				hmovement = 0;
+			else if (X1DotPosition + r >= P2x && X1DotPosition + r <= P2x + 3 && Y1DotPosition > P2y && Y1DotPosition < P2y+P2_paddle_len &&  hmovement == 1)//bounce right paddle from SE 
+				hmovement = 2;
+			else if (X1DotPosition + r >= P2x && X1DotPosition + r <= P2x + 3 && Y1DotPosition > P2y && Y1DotPosition < P2y+P2_paddle_len &&  hmovement == 0)//bounce right paddle from NE
+				hmovement = 3;
+			else if (Y1DotPosition - r <= 205 && Y1DotPosition - r >= 195 + 7 && X1DotPosition > P3x && X1DotPosition < P3x+P3_paddle_len && hmovement == 0)//bounce top paddle coming from left
+				hmovement = 1;
+			else if (Y1DotPosition - r <= 205 && Y1DotPosition - r >= 195 + 7 && X1DotPosition > P3x && X1DotPosition < P3x+P3_paddle_len && hmovement == 3)//bounce top paddle coming from right
+				hmovement = 2;
+			else if (Y1DotPosition + r >= 195 && Y1DotPosition + r <= 195 + 3 && X1DotPosition > P3x && X1DotPosition < P3x+P3_paddle_len && hmovement == 1)//bounce top paddle coming from upper left
+				hmovement = 0;
+			else if (Y1DotPosition + r >= 195 && Y1DotPosition + r <= 195 + 3 && X1DotPosition > P3x && X1DotPosition < P3x+P3_paddle_len && hmovement == 2)//bounce top paddle coming from upper right
+				hmovement = 3;
+			else if (Y1DotPosition - r <= 825 && Y1DotPosition - r >= 815 + 7 && X1DotPosition > P4x && X1DotPosition < P4x+P4_paddle_len && hmovement == 0)//bounce top paddle coming from left
+				hmovement = 1;
+			else if (Y1DotPosition - r <= 825 && Y1DotPosition - r >= 815+ 7 && X1DotPosition > P4x && X1DotPosition < P4x+P4_paddle_len && hmovement == 3)//bounce top paddle coming from right
+				hmovement = 2;
+			else if (Y1DotPosition + r >= 815 && Y1DotPosition + r <= 815 + 3 && X1DotPosition > P4x && X1DotPosition < P4x+P4_paddle_len && hmovement == 1)//bounce top paddle coming from upper left
+				hmovement = 0;
+			else if (Y1DotPosition + r >= 815 && Y1DotPosition + r <= 815 + 3 && X1DotPosition > P4x && X1DotPosition < P4x+P4_paddle_len && hmovement == 2)//bounce top paddle coming from upper right
+				hmovement = 3; 
+			else if (X1DotPosition + r >= itemX - r && X1DotPosition - r <= itemX + r && Y1DotPosition + r >= itemY - r && Y1DotPosition - r <= itemY + r && drawItem == 1)// ball hit the item
 				begin
 				//Pick the tool randomly and make the change randomly
 					clock <= 0;
-					if (randomtool == 2 && (movement == 2 || movement == 3))
+					if (randomtool == 2 && (hmovement == 2 || hmovement == 3))
 						tool <= 3;
-					else if (randomtool == 3 && (movement == 1 || movement == 0))
+					else if (randomtool == 3 && (hmovement == 1 || hmovement == 0))
 						tool <= 2;
-					else if (randomtool == 5 && (movement == 1 || movement == 0))
+					else if (randomtool == 5 && (hmovement == 1 || hmovement == 0))
 						tool <= 6;
-					else if (randomtool == 6 && (movement == 2 || movement == 3))
+					else if (randomtool == 6 && (hmovement == 2 || hmovement == 3))
 						tool <= 5;
-					else if (randomtool == 7 && (movement == 2 || movement == 3))
+					else if (randomtool == 7 && (hmovement == 2 || hmovement == 3))
 						tool <= 8;
-					else if (randomtool == 8 && (movement == 1 || movement == 0))
+					else if (randomtool == 8 && (hmovement == 1 || hmovement == 0))
 						tool <= 7;
-					else if (randomtool == 9 && (movement == 1 || movement == 0))
+					else if (randomtool == 9 && (hmovement == 1 || hmovement == 0))
 						tool <= 10;
-					else if (randomtool == 10 && (movement == 2 || movement == 3))
+					else if (randomtool == 10 && (hmovement == 2 || hmovement == 3))
 						tool <= 9;
 					else
 //						tool <= randomtool;
@@ -291,20 +401,48 @@ begin
 					randomtool <= rtool;
 					drawItem <= 0;
 				end
-			else if (XDotPosition - r <= 160) //Controlling scores when the ball goes off screen
+			else if (X1DotPosition - r <= 160) //Controlling scores when the ball goes off screen
 				begin
 					P2Score = P2Score + 1;
-					XDotPosition <= 640;
-					YDotPosition <= 512;
+					X1DotPosition <= 640;
+					Y1DotPosition <= 512;
 				end
-			else if (XDotPosition + r >= 1120)
+			else if (X1DotPosition + r >= 1120)
 				begin
 					P1Score = P1Score + 1;
-					XDotPosition <= 640;
-					YDotPosition <= 512;
+					X1DotPosition <= 640;
+					Y1DotPosition <= 512;
 				end
-				
-			if(P1Score == 10 || P2Score ==10)
+			
+			if(X2DotPosition - r <= 165 && vmovement == 0) //ball hits the left of the area coming from the top
+				vmovement = 1;
+			else if (X2DotPosition - r <= 165 && vmovement == 3) //ball hits the left of the area coming from the bottom
+				vmovement = 2;
+			else if (X2DotPosition + r >= 1110 && vmovement == 1) //ball hits the right of the area coming from the top
+				vmovement = 0;
+			else if (X2DotPosition + r >= 1110 && vmovement == 2) //ball hits the right of the area coming from the bottom
+				vmovement = 3;
+			else if (Y2DotPosition - r <= P3y+10 && Y2DotPosition - r >= P3y + 7 && X2DotPosition > P3x && X2DotPosition < P3x+P3_paddle_len && vmovement == 2)//bounce top paddle coming from left
+				vmovement = 1;
+			else if (Y2DotPosition - r <= P3y+10 && Y2DotPosition - r >= P3y + 7 && X2DotPosition > P3x && X2DotPosition < P3x+P3_paddle_len && vmovement == 3)//bounce top paddle coming from right
+				vmovement = 0;
+			else if (Y2DotPosition + r >= P4y && Y2DotPosition + r <= P4y + 3 && X2DotPosition > P4x && X2DotPosition < P4x+P4_paddle_len && vmovement == 1)//bounce top paddle coming from left
+				vmovement = 2;
+			else if (Y2DotPosition + r >= P4y && Y2DotPosition + r <= P4y + 3 && X2DotPosition > P4x && X2DotPosition < P4x+P4_paddle_len && vmovement == 0)//bounce top paddle coming from right
+				vmovement = 3; //this case
+			else if (Y2DotPosition + r <= 128)
+				begin
+					X2DotPosition <= 450;
+					Y2DotPosition <= 450;
+				end
+			else if (Y2DotPosition - r >= 896)
+				begin
+					X2DotPosition <= 450;
+					Y2DotPosition <= 450;
+				end
+			
+			if(P1Score == 10 || P2Score ==10) //Checking winners
+
 				begin
 					game <= 0;
 					if (P1Score == 10)
@@ -317,8 +455,10 @@ begin
 	//Use SW[0] to reset the game
 	else if (SW[0] == 0)
 		begin
-			XDotPosition <= 640;
-			YDotPosition <= 512;
+			X1DotPosition <= 640;
+			Y1DotPosition <= 512;
+			X2DotPosition <= 450;
+			Y2DotPosition <= 450;
 			P1Score <= 0;
 			P2Score <= 0;
 			tool <= 0;
@@ -334,9 +474,11 @@ VGAFrequency VGAFreq (aresetPll, CLOCK_50, pixelClock);
 
 VGAController VGAControl (pixelClock, redValue, greenValue, blueValue, VGA_R, VGA_G, VGA_B, VGA_VS, VGA_HS, XPixelPosition, YPixelPosition);
 
+
 //---------------------------------------------------------------------------------------------------------------------------------------
 //For Drawing borders, players and ball to screen
 //XPixelPosition and YPixelPosition traverse the screen like in lab 6 and draw what it needs to when it hits certain spots
+
 //VGA pattern and charactor display
 always@ (posedge pixelClock)
 begin		
@@ -1153,6 +1295,19 @@ begin
 			blueValue <= 8'b11111111;
 			greenValue <= 8'b11111111;
 		end
+		else if (XPixelPosition > P3x && XPixelPosition < P3x+P3_paddle_len && YPixelPosition > P3y && YPixelPosition < P3y+10)//Draw p3 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
+		else if (XPixelPosition > P4x && XPixelPosition < P4x+P4_paddle_len && YPixelPosition > P4y && YPixelPosition < P4y+10)//Draw p4 paddle
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
+			greenValue <= 8'b11111111;
+		end
+
 		else if (((XPixelPosition- itemX)**2 
 						+ (YPixelPosition-itemY)**2) < 10**2 && drawItem == 1) 
 		begin
@@ -1161,19 +1316,26 @@ begin
 			greenValue <= color3;
 		end
 		
-		else if (tool != 1 && ((XPixelPosition-XDotPosition)**2 
-						+ (YPixelPosition-YDotPosition)**2) < 10**2) 
+		else if (tool != 1 && ((XPixelPosition-X1DotPosition)**2 
+						+ (YPixelPosition-Y1DotPosition)**2) < 10**2) 
 		begin
 			redValue <= 8'b11111111; 
 			blueValue <= 8'b00000000;
 			greenValue <= 8'b00000000;
 		end
 		
-		else if (tool == 1 && ((XPixelPosition-XDotPosition)**2 
-						+ (YPixelPosition-YDotPosition)**2) < 20**2) 
+		else if (tool == 1 && ((XPixelPosition-X1DotPosition)**2 
+						+ (YPixelPosition-Y1DotPosition)**2) < 20**2) 
 		begin
 			redValue <= 8'b11111111; 
 			blueValue <= 8'b00000000;
+			greenValue <= 8'b00000000;
+		end
+		
+		else if(((XPixelPosition-X2DotPosition)**2 + (YPixelPosition-Y2DotPosition)**2) < 10**2)
+		begin
+			redValue <= 8'b00000000; 
+			blueValue <= 8'b11111111;
 			greenValue <= 8'b00000000;
 		end
 		else // default background is black
@@ -1186,6 +1348,7 @@ begin
 end
 
 endmodule
+
 
 //----------------------------------------------------------------------------------------------------------------------
 //VGA stuff probably not needed since vga_adapter from lab 6 is included
@@ -1427,6 +1590,7 @@ module VGAFrequency (
 
 endmodule
 
+
 //The module find a random x and random y for the coordinate
 module RandomPoint(VGA_clk,randX, randY);
 	input VGA_clk;
@@ -1516,4 +1680,5 @@ module RandomTool(VGA_clk, rtool, color1, color2, color3);
 	begin
 		color3 <= colorp3;
 	end
+
 endmodule

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for PongChaos
-Thu Mar 12 18:16:00 2020
+Thu Mar 12 20:54:29 2020
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -14,26 +14,31 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis DSP Block Usage Summary
-  9. State Machine - |PongChaos|movement
- 10. State Machine - |PongChaos|drawItem
- 11. State Machine - |PongChaos|printer
- 12. Registers Removed During Synthesis
- 13. General Register Statistics
- 14. Inverted Register Statistics
- 15. Multiplexer Restructuring Statistics (Restructuring Performed)
- 16. Parameter Settings for User Entity Instance: VGAFrequency:VGAFreq|altpll:altpll_component
- 17. Parameter Settings for User Entity Instance: VGAController:VGAControl
- 18. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
- 19. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult1
- 20. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult4
- 21. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult5
- 22. altpll Parameter Settings by Entity Instance
- 23. lpm_mult Parameter Settings by Entity Instance
- 24. Port Connectivity Checks: "VGAFrequency:VGAFreq"
- 25. Post-Synthesis Netlist Statistics for Top Partition
- 26. Elapsed Time Per Partition
- 27. Analysis & Synthesis Messages
- 28. Analysis & Synthesis Suppressed Messages
+  9. State Machine - |PongChaos|vmovement
+ 10. State Machine - |PongChaos|hmovement
+ 11. State Machine - |PongChaos|tool
+ 12. State Machine - |PongChaos|drawItem
+ 13. State Machine - |PongChaos|printer
+ 14. Registers Removed During Synthesis
+ 15. Removed Registers Triggering Further Register Optimizations
+ 16. General Register Statistics
+ 17. Inverted Register Statistics
+ 18. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 19. Parameter Settings for User Entity Instance: VGAFrequency:VGAFreq|altpll:altpll_component
+ 20. Parameter Settings for User Entity Instance: VGAController:VGAControl
+ 21. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
+ 22. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult1
+ 23. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult6
+ 24. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult7
+ 25. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult4
+ 26. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult5
+ 27. altpll Parameter Settings by Entity Instance
+ 28. lpm_mult Parameter Settings by Entity Instance
+ 29. Port Connectivity Checks: "VGAFrequency:VGAFreq"
+ 30. Post-Synthesis Netlist Statistics for Top Partition
+ 31. Elapsed Time Per Partition
+ 32. Analysis & Synthesis Messages
+ 33. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -60,19 +65,19 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Thu Mar 12 18:16:00 2020       ;
+; Analysis & Synthesis Status        ; Successful - Thu Mar 12 20:54:28 2020       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; PongChaos                                   ;
 ; Top-level Entity Name              ; PongChaos                                   ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 1,389                                       ;
-;     Total combinational functions  ; 1,367                                       ;
-;     Dedicated logic registers      ; 251                                         ;
-; Total registers                    ; 251                                         ;
+; Total logic elements               ; 1,719                                       ;
+;     Total combinational functions  ; 1,706                                       ;
+;     Dedicated logic registers      ; 266                                         ;
+; Total registers                    ; 266                                         ;
 ; Total pins                         ; 54                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0                                           ;
-; Embedded Multiplier 9-bit elements ; 8                                           ;
+; Embedded Multiplier 9-bit elements ; 12                                          ;
 ; Total PLLs                         ; 1                                           ;
 +------------------------------------+---------------------------------------------+
 
@@ -176,7 +181,7 @@ agreement for further details.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
+;     Processor 2            ;   0.0%      ;
 ;     Processor 3            ;   0.0%      ;
 ;     Processor 4            ;   0.0%      ;
 ;     Processor 5            ;   0.0%      ;
@@ -210,33 +215,33 @@ agreement for further details.
 +---------------------------------------------+----------------------+
 ; Resource                                    ; Usage                ;
 +---------------------------------------------+----------------------+
-; Estimated Total logic elements              ; 1,389                ;
+; Estimated Total logic elements              ; 1,719                ;
 ;                                             ;                      ;
-; Total combinational functions               ; 1367                 ;
+; Total combinational functions               ; 1706                 ;
 ; Logic element usage by number of LUT inputs ;                      ;
-;     -- 4 input functions                    ; 521                  ;
-;     -- 3 input functions                    ; 445                  ;
-;     -- <=2 input functions                  ; 401                  ;
+;     -- 4 input functions                    ; 695                  ;
+;     -- 3 input functions                    ; 504                  ;
+;     -- <=2 input functions                  ; 507                  ;
 ;                                             ;                      ;
 ; Logic elements by mode                      ;                      ;
-;     -- normal mode                          ; 835                  ;
-;     -- arithmetic mode                      ; 532                  ;
+;     -- normal mode                          ; 1037                 ;
+;     -- arithmetic mode                      ; 669                  ;
 ;                                             ;                      ;
-; Total registers                             ; 251                  ;
-;     -- Dedicated logic registers            ; 251                  ;
+; Total registers                             ; 266                  ;
+;     -- Dedicated logic registers            ; 266                  ;
 ;     -- I/O registers                        ; 0                    ;
 ;                                             ;                      ;
 ; I/O pins                                    ; 54                   ;
 ;                                             ;                      ;
-; Embedded Multiplier 9-bit elements          ; 8                    ;
+; Embedded Multiplier 9-bit elements          ; 12                   ;
 ;                                             ;                      ;
 ; Total PLLs                                  ; 1                    ;
 ;     -- PLLs                                 ; 1                    ;
 ;                                             ;                      ;
 ; Maximum fan-out node                        ; slowClockCounter[16] ;
-; Maximum fan-out                             ; 118                  ;
-; Total fan-out                               ; 5030                 ;
-; Average fan-out                             ; 2.90                 ;
+; Maximum fan-out                             ; 133                  ;
+; Total fan-out                               ; 6145                 ;
+; Average fan-out                             ; 2.94                 ;
 +---------------------------------------------+----------------------+
 
 
@@ -245,10 +250,10 @@ agreement for further details.
 +-----------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+---------------------+--------------+
 ; Compilation Hierarchy Node                    ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                        ; Entity Name         ; Library Name ;
 +-----------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+---------------------+--------------+
-; |PongChaos                                    ; 1367 (1192)         ; 251 (182)                 ; 0           ; 8            ; 0       ; 4         ; 54   ; 0            ; |PongChaos                                                                                 ; PongChaos           ; work         ;
+; |PongChaos                                    ; 1706 (1530)         ; 266 (197)                 ; 0           ; 12           ; 0       ; 6         ; 54   ; 0            ; |PongChaos                                                                                 ; PongChaos           ; work         ;
 ;    |RandomPoint:ran|                          ; 45 (45)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|RandomPoint:ran                                                                 ; RandomPoint         ; work         ;
 ;    |RandomTool:rant|                          ; 37 (37)             ; 25 (25)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|RandomTool:rant                                                                 ; RandomTool          ; work         ;
-;    |VGAController:VGAControl|                 ; 93 (93)             ; 24 (24)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|VGAController:VGAControl                                                        ; VGAController       ; work         ;
+;    |VGAController:VGAControl|                 ; 94 (94)             ; 24 (24)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|VGAController:VGAControl                                                        ; VGAController       ; work         ;
 ;    |VGAFrequency:VGAFreq|                     ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|VGAFrequency:VGAFreq                                                            ; VGAFrequency        ; work         ;
 ;       |altpll:altpll_component|               ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|VGAFrequency:VGAFreq|altpll:altpll_component                                    ; altpll              ; work         ;
 ;          |VGAFrequency_altpll:auto_generated| ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |PongChaos|VGAFrequency:VGAFreq|altpll:altpll_component|VGAFrequency_altpll:auto_generated ; VGAFrequency_altpll ; work         ;
@@ -260,6 +265,10 @@ agreement for further details.
 ;       |mult_t5t:auto_generated|               ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult4|mult_t5t:auto_generated                                          ; mult_t5t            ; work         ;
 ;    |lpm_mult:Mult5|                           ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult5                                                                  ; lpm_mult            ; work         ;
 ;       |mult_t5t:auto_generated|               ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult5|mult_t5t:auto_generated                                          ; mult_t5t            ; work         ;
+;    |lpm_mult:Mult6|                           ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult6                                                                  ; lpm_mult            ; work         ;
+;       |mult_t5t:auto_generated|               ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult6|mult_t5t:auto_generated                                          ; mult_t5t            ; work         ;
+;    |lpm_mult:Mult7|                           ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult7                                                                  ; lpm_mult            ; work         ;
+;       |mult_t5t:auto_generated|               ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |PongChaos|lpm_mult:Mult7|mult_t5t:auto_generated                                          ; mult_t5t            ; work         ;
 +-----------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+---------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -270,10 +279,10 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; Statistic                             ; Number Used ;
 +---------------------------------------+-------------+
 ; Simple Multipliers (9-bit)            ; 0           ;
-; Simple Multipliers (18-bit)           ; 4           ;
+; Simple Multipliers (18-bit)           ; 6           ;
 ; Embedded Multiplier Blocks            ; --          ;
-; Embedded Multiplier 9-bit elements    ; 8           ;
-; Signed Embedded Multipliers           ; 4           ;
+; Embedded Multiplier 9-bit elements    ; 12          ;
+; Signed Embedded Multipliers           ; 6           ;
 ; Unsigned Embedded Multipliers         ; 0           ;
 ; Mixed Sign Embedded Multipliers       ; 0           ;
 ; Variable Sign Embedded Multipliers    ; 0           ;
@@ -283,16 +292,49 @@ Note: number of Embedded Multiplier Blocks used is only available after a succes
 
 
 Encoding Type:  One-Hot
-+--------------------------------------------------------------------------+
-; State Machine - |PongChaos|movement                                      ;
-+--------------+--------------+--------------+--------------+--------------+
-; Name         ; movement.011 ; movement.010 ; movement.001 ; movement.000 ;
-+--------------+--------------+--------------+--------------+--------------+
-; movement.000 ; 0            ; 0            ; 0            ; 0            ;
-; movement.001 ; 0            ; 0            ; 1            ; 1            ;
-; movement.010 ; 0            ; 1            ; 0            ; 1            ;
-; movement.011 ; 1            ; 0            ; 0            ; 1            ;
-+--------------+--------------+--------------+--------------+--------------+
++-------------------------------------------------------------------------------+
+; State Machine - |PongChaos|vmovement                                          ;
++---------------+---------------+---------------+---------------+---------------+
+; Name          ; vmovement.011 ; vmovement.010 ; vmovement.001 ; vmovement.000 ;
++---------------+---------------+---------------+---------------+---------------+
+; vmovement.000 ; 0             ; 0             ; 0             ; 0             ;
+; vmovement.001 ; 0             ; 0             ; 1             ; 1             ;
+; vmovement.010 ; 0             ; 1             ; 0             ; 1             ;
+; vmovement.011 ; 1             ; 0             ; 0             ; 1             ;
++---------------+---------------+---------------+---------------+---------------+
+
+
+Encoding Type:  One-Hot
++-------------------------------------------------------------------------------+
+; State Machine - |PongChaos|hmovement                                          ;
++---------------+---------------+---------------+---------------+---------------+
+; Name          ; hmovement.011 ; hmovement.010 ; hmovement.001 ; hmovement.000 ;
++---------------+---------------+---------------+---------------+---------------+
+; hmovement.000 ; 0             ; 0             ; 0             ; 0             ;
+; hmovement.001 ; 0             ; 0             ; 1             ; 1             ;
+; hmovement.010 ; 0             ; 1             ; 0             ; 1             ;
+; hmovement.011 ; 1             ; 0             ; 0             ; 1             ;
++---------------+---------------+---------------+---------------+---------------+
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |PongChaos|tool                                                                                                               ;
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+; Name      ; tool.1010 ; tool.1001 ; tool.1000 ; tool.0111 ; tool.0110 ; tool.0101 ; tool.0100 ; tool.0011 ; tool.0010 ; tool.0001 ; tool.0000 ;
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+; tool.0000 ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ;
+; tool.0001 ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ; 1         ;
+; tool.0010 ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ; 0         ; 1         ;
+; tool.0011 ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ; 0         ; 0         ; 1         ;
+; tool.0100 ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ; 0         ; 0         ; 0         ; 1         ;
+; tool.0101 ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ; 0         ; 0         ; 0         ; 0         ; 1         ;
+; tool.0110 ; 0         ; 0         ; 0         ; 0         ; 1         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ;
+; tool.0111 ; 0         ; 0         ; 0         ; 1         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ;
+; tool.1000 ; 0         ; 0         ; 1         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ;
+; tool.1001 ; 0         ; 1         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ;
+; tool.1010 ; 1         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 0         ; 1         ;
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
 
 Encoding Type:  One-Hot
@@ -327,20 +369,18 @@ Encoding Type:  One-Hot
 ; RandomTool:rant|colorp2[0]             ; Stuck at VCC due to stuck port data_in ;
 ; RandomTool:rant|colorp3[0]             ; Stuck at VCC due to stuck port data_in ;
 ; RandomTool:rant|colorp3[1]             ; Stuck at GND due to stuck port data_in ;
-; P2_paddle_speed[4..10]                 ; Stuck at GND due to stuck port data_in ;
-; P1_paddle_speed[4..10]                 ; Stuck at GND due to stuck port data_in ;
 ; speed[2..10]                           ; Stuck at GND due to stuck port data_in ;
 ; P2_paddle_len[8..10]                   ; Stuck at GND due to stuck port data_in ;
 ; P1_paddle_len[8..10]                   ; Stuck at GND due to stuck port data_in ;
 ; r[0,5..10]                             ; Stuck at GND due to stuck port data_in ;
 ; r[4]                                   ; Merged with r[2]                       ;
-; P2_paddle_len[6]                       ; Merged with P2_paddle_len[3]           ;
 ; P2_paddle_len[2]                       ; Merged with P2_paddle_len[0]           ;
 ; r[3]                                   ; Merged with r[1]                       ;
+; P2_paddle_len[6]                       ; Merged with P2_paddle_len[3]           ;
 ; P2_paddle_len[5]                       ; Merged with P2_paddle_len[4]           ;
+; P1_paddle_len[2]                       ; Merged with P1_paddle_len[0]           ;
 ; P1_paddle_len[6]                       ; Merged with P1_paddle_len[3]           ;
 ; P1_paddle_len[5]                       ; Merged with P1_paddle_len[4]           ;
-; P1_paddle_len[2]                       ; Merged with P1_paddle_len[0]           ;
 ; fastClockCounter[0]                    ; Merged with slowClockCounter[0]        ;
 ; slowClockCounter[1]                    ; Merged with fastClockCounter[1]        ;
 ; slowClockCounter[2]                    ; Merged with fastClockCounter[2]        ;
@@ -357,18 +397,46 @@ Encoding Type:  One-Hot
 ; slowClockCounter[13]                   ; Merged with fastClockCounter[13]       ;
 ; slowClockCounter[14]                   ; Merged with fastClockCounter[14]       ;
 ; slowClockCounter[15]                   ; Merged with fastClockCounter[15]       ;
-; movement~2                             ; Lost fanout                            ;
-; movement~3                             ; Lost fanout                            ;
-; movement~4                             ; Lost fanout                            ;
+; vmovement~2                            ; Lost fanout                            ;
+; vmovement~3                            ; Lost fanout                            ;
+; vmovement~4                            ; Lost fanout                            ;
+; hmovement~2                            ; Lost fanout                            ;
+; hmovement~3                            ; Lost fanout                            ;
+; hmovement~4                            ; Lost fanout                            ;
+; tool~2                                 ; Lost fanout                            ;
+; tool~3                                 ; Lost fanout                            ;
+; tool~4                                 ; Lost fanout                            ;
+; tool~5                                 ; Lost fanout                            ;
 ; drawItem~5                             ; Lost fanout                            ;
 ; printer~6                              ; Lost fanout                            ;
 ; printer~7                              ; Lost fanout                            ;
 ; printer~8                              ; Lost fanout                            ;
+; tool.0111                              ; Lost fanout                            ;
+; tool.1000                              ; Lost fanout                            ;
+; tool.1001                              ; Lost fanout                            ;
+; tool.1010                              ; Lost fanout                            ;
 ; printer.000                            ; Lost fanout                            ;
+; tool.0100                              ; Merged with tool.0001                  ;
+; speed[1]                               ; Merged with r[2]                       ;
+; speed[0]                               ; Merged with r[1]                       ;
 ; slowClockCounter[17..20]               ; Lost fanout                            ;
 ; fastClockCounter[18..20]               ; Lost fanout                            ;
-; Total Number of Removed Registers = 78 ;                                        ;
+; tool.0001                              ; Stuck at GND due to stuck port data_in ;
+; r[1]                                   ; Stuck at VCC due to stuck port data_in ;
+; r[2]                                   ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 81 ;                                        ;
 +----------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                        ;
++---------------+---------------------------+----------------------------------------+
+; Register name ; Reason for Removal        ; Registers Removed due to This Register ;
++---------------+---------------------------+----------------------------------------+
+; tool.0001     ; Stuck at GND              ; r[1], r[2]                             ;
+;               ; due to stuck port data_in ;                                        ;
+; tool~2        ; Lost Fanouts              ; tool.1001                              ;
++---------------+---------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -376,12 +444,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 251   ;
-; Number of registers using Synchronous Clear  ; 62    ;
-; Number of registers using Synchronous Load   ; 17    ;
+; Total registers                              ; 266   ;
+; Number of registers using Synchronous Clear  ; 56    ;
+; Number of registers using Synchronous Load   ; 6     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 136   ;
+; Number of registers using Clock Enable       ; 148   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -393,56 +461,61 @@ Encoding Type:  One-Hot
 +-----------------------------------------+---------+
 ; VGAController:VGAControl|HorSynch       ; 1       ;
 ; VGAController:VGAControl|VertSynch      ; 1       ;
-; P2y[8]                                  ; 7       ;
-; P2y[7]                                  ; 7       ;
-; P2y[6]                                  ; 7       ;
-; P2y[5]                                  ; 7       ;
-; P2y[4]                                  ; 7       ;
-; P2y[2]                                  ; 7       ;
-; P2_paddle_len[3]                        ; 6       ;
-; P2_paddle_len[4]                        ; 6       ;
-; P2_paddle_len[0]                        ; 6       ;
-; P1y[8]                                  ; 6       ;
-; P1y[7]                                  ; 6       ;
-; P1y[6]                                  ; 6       ;
-; P1y[5]                                  ; 6       ;
-; P1y[4]                                  ; 6       ;
-; P1y[2]                                  ; 6       ;
-; P1_paddle_len[3]                        ; 4       ;
-; P1_paddle_len[4]                        ; 4       ;
-; P1_paddle_len[0]                        ; 4       ;
+; P4x[9]                                  ; 7       ;
+; P4x[5]                                  ; 7       ;
+; P4x[4]                                  ; 7       ;
+; P4x[2]                                  ; 7       ;
+; P4x[1]                                  ; 7       ;
+; P4x[0]                                  ; 6       ;
+; P2_paddle_len[4]                        ; 10      ;
+; P2_paddle_len[3]                        ; 14      ;
+; P2_paddle_len[0]                        ; 14      ;
+; P3x[9]                                  ; 7       ;
+; P3x[5]                                  ; 7       ;
+; P3x[4]                                  ; 7       ;
+; P3x[2]                                  ; 7       ;
+; P3x[1]                                  ; 7       ;
+; P3x[0]                                  ; 6       ;
+; P1_paddle_len[4]                        ; 8       ;
+; P1_paddle_len[3]                        ; 11      ;
+; P1_paddle_len[0]                        ; 11      ;
 ; RandomTool:rant|colorp1[0]              ; 3       ;
-; game                                    ; 14      ;
-; YDotPosition[8]                         ; 10      ;
-; YDotPosition[7]                         ; 10      ;
-; YDotPosition[6]                         ; 10      ;
-; YDotPosition[5]                         ; 10      ;
-; YDotPosition[4]                         ; 10      ;
-; YDotPosition[2]                         ; 10      ;
-; XDotPosition[8]                         ; 4       ;
-; XDotPosition[7]                         ; 4       ;
-; XDotPosition[6]                         ; 4       ;
-; XDotPosition[5]                         ; 4       ;
-; XDotPosition[4]                         ; 4       ;
-; r[1]                                    ; 19      ;
-; XDotPosition[2]                         ; 4       ;
+; game                                    ; 37      ;
+; X1DotPosition[8]                        ; 9       ;
+; X1DotPosition[7]                        ; 9       ;
+; X1DotPosition[6]                        ; 9       ;
+; X1DotPosition[5]                        ; 9       ;
+; X1DotPosition[4]                        ; 9       ;
+; X1DotPosition[2]                        ; 9       ;
 ; itemX[9]                                ; 3       ;
 ; itemX[7]                                ; 3       ;
+; Y1DotPosition[8]                        ; 8       ;
+; Y1DotPosition[7]                        ; 8       ;
+; Y1DotPosition[6]                        ; 9       ;
+; Y1DotPosition[5]                        ; 9       ;
+; Y1DotPosition[4]                        ; 8       ;
+; Y1DotPosition[2]                        ; 9       ;
 ; itemY[9]                                ; 3       ;
-; P2_paddle_speed[2]                      ; 2       ;
-; P2_paddle_speed[0]                      ; 2       ;
-; P1_paddle_speed[2]                      ; 2       ;
-; P1_paddle_speed[0]                      ; 2       ;
-; randomtool[1]                           ; 8       ;
-; speed[0]                                ; 3       ;
+; randomtool[1]                           ; 6       ;
 ; RandomPoint:ran|x[8]                    ; 3       ;
 ; RandomPoint:ran|x[2]                    ; 3       ;
 ; RandomPoint:ran|y[7]                    ; 3       ;
 ; RandomPoint:ran|y[6]                    ; 3       ;
 ; RandomPoint:ran|y[5]                    ; 3       ;
 ; RandomPoint:ran|y[0]                    ; 3       ;
+; X2DotPosition[1]                        ; 8       ;
+; X2DotPosition[2]                        ; 8       ;
+; X2DotPosition[3]                        ; 8       ;
+; X2DotPosition[5]                        ; 8       ;
+; X2DotPosition[6]                        ; 8       ;
+; X2DotPosition[7]                        ; 8       ;
+; X2DotPosition[9]                        ; 8       ;
+; Y2DotPosition[1]                        ; 4       ;
+; Y2DotPosition[6]                        ; 4       ;
+; Y2DotPosition[7]                        ; 4       ;
+; Y2DotPosition[8]                        ; 4       ;
 ; RandomTool:rant|outp[0]                 ; 5       ;
-; Total number of inverted registers = 51 ;         ;
+; Total number of inverted registers = 56 ;         ;
 +-----------------------------------------+---------+
 
 
@@ -451,32 +524,28 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |PongChaos|VGAController:VGAControl|YTiming[7] ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |PongChaos|P1Score[2]                          ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |PongChaos|P1_paddle_len[1]                    ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |PongChaos|P2_paddle_len[7]                    ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 6 LEs                ; 14 LEs                 ; Yes        ; |PongChaos|P1_paddle_speed[1]                  ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 6 LEs                ; 14 LEs                 ; Yes        ; |PongChaos|P2_paddle_speed[3]                  ;
-; 6:1                ; 10 bits   ; 40 LEs        ; 10 LEs               ; 30 LEs                 ; Yes        ; |PongChaos|XDotPosition[10]                    ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |PongChaos|P2y[9]                              ;
-; 7:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; Yes        ; |PongChaos|P2y[3]                              ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |PongChaos|P1y[9]                              ;
-; 7:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; Yes        ; |PongChaos|P1y[1]                              ;
-; 41:1               ; 2 bits    ; 54 LEs        ; 28 LEs               ; 26 LEs                 ; Yes        ; |PongChaos|greenValue[0]                       ;
-; 44:1               ; 13 bits   ; 377 LEs       ; 234 LEs              ; 143 LEs                ; Yes        ; |PongChaos|greenValue[4]                       ;
-; 59:1               ; 8 bits    ; 312 LEs       ; 304 LEs              ; 8 LEs                  ; Yes        ; |PongChaos|redValue[0]                         ;
-; 16:1               ; 3 bits    ; 30 LEs        ; 6 LEs                ; 24 LEs                 ; Yes        ; |PongChaos|P1_paddle_len[3]                    ;
-; 16:1               ; 3 bits    ; 30 LEs        ; 6 LEs                ; 24 LEs                 ; Yes        ; |PongChaos|P2_paddle_len[0]                    ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 6 LEs                ; 14 LEs                 ; Yes        ; |PongChaos|P1_paddle_speed[2]                  ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 6 LEs                ; 14 LEs                 ; Yes        ; |PongChaos|P2_paddle_speed[2]                  ;
-; 6:1                ; 12 bits   ; 48 LEs        ; 12 LEs               ; 36 LEs                 ; Yes        ; |PongChaos|XDotPosition[5]                     ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |PongChaos|P2y[5]                              ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |PongChaos|P1y[2]                              ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |PongChaos|VGAController:VGAControl|YTiming[4] ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |PongChaos|P2Score[1]                          ;
+; 6:1                ; 10 bits   ; 40 LEs        ; 10 LEs               ; 30 LEs                 ; Yes        ; |PongChaos|X1DotPosition[9]                    ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 15 LEs               ; 5 LEs                  ; Yes        ; |PongChaos|P4x[3]                              ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 15 LEs               ; 5 LEs                  ; Yes        ; |PongChaos|P3x[10]                             ;
+; 6:1                ; 11 bits   ; 44 LEs        ; 11 LEs               ; 33 LEs                 ; Yes        ; |PongChaos|Y2DotPosition[3]                    ;
+; 46:1               ; 6 bits    ; 180 LEs       ; 120 LEs              ; 60 LEs                 ; Yes        ; |PongChaos|greenValue[2]                       ;
+; 46:1               ; 7 bits    ; 210 LEs       ; 119 LEs              ; 91 LEs                 ; Yes        ; |PongChaos|blueValue[5]                        ;
+; 61:1               ; 8 bits    ; 320 LEs       ; 304 LEs              ; 16 LEs                 ; Yes        ; |PongChaos|redValue[0]                         ;
+; 6:1                ; 12 bits   ; 48 LEs        ; 12 LEs               ; 36 LEs                 ; Yes        ; |PongChaos|Y1DotPosition[7]                    ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |PongChaos|P4x[2]                              ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |PongChaos|P3x[0]                              ;
+; 6:1                ; 11 bits   ; 44 LEs        ; 11 LEs               ; 33 LEs                 ; Yes        ; |PongChaos|X2DotPosition[2]                    ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |PongChaos|printer                             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |PongChaos|Add13                               ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |PongChaos|Add12                               ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |PongChaos|Add8                                ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |PongChaos|Add9                                ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |PongChaos|Add10                               ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |PongChaos|drawItem                            ;
-; 10:1               ; 4 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |PongChaos|movement                            ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |PongChaos|vmovement                           ;
+; 12:1               ; 10 bits   ; 80 LEs        ; 70 LEs               ; 10 LEs                 ; No         ; |PongChaos|tool                                ;
+; 18:1               ; 4 bits    ; 48 LEs        ; 44 LEs               ; 4 LEs                  ; No         ; |PongChaos|hmovement                           ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 
 
@@ -942,6 +1011,76 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 
 +-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_mult:Mult6                     ;
++------------------------------------------------+--------------+---------------------+
+; Parameter Name                                 ; Value        ; Type                ;
++------------------------------------------------+--------------+---------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY          ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY        ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE        ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE      ;
+; LPM_WIDTHA                                     ; 12           ; Untyped             ;
+; LPM_WIDTHB                                     ; 12           ; Untyped             ;
+; LPM_WIDTHP                                     ; 24           ; Untyped             ;
+; LPM_WIDTHR                                     ; 24           ; Untyped             ;
+; LPM_WIDTHS                                     ; 1            ; Untyped             ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped             ;
+; LPM_PIPELINE                                   ; 0            ; Untyped             ;
+; LATENCY                                        ; 0            ; Untyped             ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped             ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped             ;
+; USE_EAB                                        ; OFF          ; Untyped             ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped             ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped             ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped             ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped             ;
+; CBXI_PARAMETER                                 ; mult_t5t     ; Untyped             ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped             ;
++------------------------------------------------+--------------+---------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_mult:Mult7                     ;
++------------------------------------------------+--------------+---------------------+
+; Parameter Name                                 ; Value        ; Type                ;
++------------------------------------------------+--------------+---------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY          ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY        ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE        ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE      ;
+; LPM_WIDTHA                                     ; 12           ; Untyped             ;
+; LPM_WIDTHB                                     ; 12           ; Untyped             ;
+; LPM_WIDTHP                                     ; 24           ; Untyped             ;
+; LPM_WIDTHR                                     ; 24           ; Untyped             ;
+; LPM_WIDTHS                                     ; 1            ; Untyped             ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped             ;
+; LPM_PIPELINE                                   ; 0            ; Untyped             ;
+; LATENCY                                        ; 0            ; Untyped             ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped             ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped             ;
+; USE_EAB                                        ; OFF          ; Untyped             ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped             ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped             ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped             ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped             ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped             ;
+; CBXI_PARAMETER                                 ; mult_t5t     ; Untyped             ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped             ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped             ;
++------------------------------------------------+--------------+---------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
 ; Parameter Settings for Inferred Entity Instance: lpm_mult:Mult4                     ;
 +------------------------------------------------+--------------+---------------------+
 ; Parameter Name                                 ; Value        ; Type                ;
@@ -1033,7 +1172,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +---------------------------------------+----------------+
 ; Name                                  ; Value          ;
 +---------------------------------------+----------------+
-; Number of entity instances            ; 4              ;
+; Number of entity instances            ; 6              ;
 ; Entity Instance                       ; lpm_mult:Mult0 ;
 ;     -- LPM_WIDTHA                     ; 12             ;
 ;     -- LPM_WIDTHB                     ; 12             ;
@@ -1046,6 +1185,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     -- INPUT_A_FIXED_VALUE            ; Bx             ;
 ;     -- INPUT_B_FIXED_VALUE            ; Bx             ;
 ; Entity Instance                       ; lpm_mult:Mult1 ;
+;     -- LPM_WIDTHA                     ; 12             ;
+;     -- LPM_WIDTHB                     ; 12             ;
+;     -- LPM_WIDTHP                     ; 24             ;
+;     -- LPM_REPRESENTATION             ; SIGNED         ;
+;     -- INPUT_A_IS_CONSTANT            ; NO             ;
+;     -- INPUT_B_IS_CONSTANT            ; NO             ;
+;     -- USE_EAB                        ; OFF            ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO           ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx             ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx             ;
+; Entity Instance                       ; lpm_mult:Mult6 ;
+;     -- LPM_WIDTHA                     ; 12             ;
+;     -- LPM_WIDTHB                     ; 12             ;
+;     -- LPM_WIDTHP                     ; 24             ;
+;     -- LPM_REPRESENTATION             ; SIGNED         ;
+;     -- INPUT_A_IS_CONSTANT            ; NO             ;
+;     -- INPUT_B_IS_CONSTANT            ; NO             ;
+;     -- USE_EAB                        ; OFF            ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO           ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx             ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx             ;
+; Entity Instance                       ; lpm_mult:Mult7 ;
 ;     -- LPM_WIDTHA                     ; 12             ;
 ;     -- LPM_WIDTHB                     ; 12             ;
 ;     -- LPM_WIDTHP                     ; 24             ;
@@ -1096,30 +1257,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 54                          ;
-; cycloneiii_ff         ; 251                         ;
-;     ENA               ; 91                          ;
-;     ENA SCLR          ; 43                          ;
-;     ENA SCLR SLD      ; 1                           ;
-;     ENA SLD           ; 1                           ;
+; cycloneiii_ff         ; 266                         ;
+;     ENA               ; 110                         ;
+;     ENA SCLR          ; 38                          ;
 ;     SCLR              ; 18                          ;
-;     SLD               ; 15                          ;
-;     plain             ; 82                          ;
-; cycloneiii_lcell_comb ; 1370                        ;
-;     arith             ; 532                         ;
-;         2 data inputs ; 212                         ;
-;         3 data inputs ; 320                         ;
-;     normal            ; 838                         ;
-;         0 data inputs ; 16                          ;
+;     SLD               ; 6                           ;
+;     plain             ; 94                          ;
+; cycloneiii_lcell_comb ; 1709                        ;
+;     arith             ; 669                         ;
+;         2 data inputs ; 327                         ;
+;         3 data inputs ; 342                         ;
+;     normal            ; 1040                        ;
+;         0 data inputs ; 21                          ;
 ;         1 data inputs ; 32                          ;
-;         2 data inputs ; 144                         ;
-;         3 data inputs ; 125                         ;
-;         4 data inputs ; 521                         ;
-; cycloneiii_mac_mult   ; 4                           ;
-; cycloneiii_mac_out    ; 4                           ;
+;         2 data inputs ; 130                         ;
+;         3 data inputs ; 162                         ;
+;         4 data inputs ; 695                         ;
+; cycloneiii_mac_mult   ; 6                           ;
+; cycloneiii_mac_out    ; 6                           ;
 ; cycloneiii_pll        ; 1                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 17.70                       ;
-; Average LUT depth     ; 8.10                        ;
+; Max LUT depth         ; 19.70                       ;
+; Average LUT depth     ; 8.86                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1128,7 +1287,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:04     ;
+; Top            ; 00:00:16     ;
 +----------------+--------------+
 
 
@@ -1138,52 +1297,46 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Mar 12 18:15:48 2020
+    Info: Processing started: Thu Mar 12 20:54:04 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off PongChaos -c PongChaos
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(516): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 516
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(531): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 531
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(638): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 638
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(653): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 653
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(760): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 760
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(775): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 775
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(852): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 852
-Warning (10229): Verilog HDL Expression warning at PongChaos.v(867): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 867
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(658): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 658
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(673): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 673
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(780): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 780
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(795): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 795
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(902): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 902
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(917): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 917
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(994): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 994
+Warning (10229): Verilog HDL Expression warning at PongChaos.v(1009): truncated literal to match 8 bits File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1009
 Warning (12125): Using design file PongChaos.v, which is not specified as a design file for the current project, but contains definitions for 5 design units and 5 entities in project
-    Info (12023): Found entity 1: PongChaos File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1
-    Info (12023): Found entity 2: VGAController File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1196
-    Info (12023): Found entity 3: VGAFrequency File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1310
-    Info (12023): Found entity 4: RandomPoint File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1431
-    Info (12023): Found entity 5: RandomTool File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1465
+    Info (12023): Found entity 1: PongChaos File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 2
+    Info (12023): Found entity 2: VGAController File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1359
+    Info (12023): Found entity 3: VGAFrequency File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1473
+    Info (12023): Found entity 4: RandomPoint File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1595
+    Info (12023): Found entity 5: RandomTool File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1629
 Info (12127): Elaborating entity "PongChaos" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(87): truncated value with size 32 to match size of target (21) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 87
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(95): truncated value with size 32 to match size of target (21) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 95
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(110): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 110
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(136): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 136
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(158): truncated value with size 32 to match size of target (28) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 158
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(199): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 199
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(203): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 203
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(207): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 207
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(211): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 211
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(215): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 215
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(219): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 219
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(223): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 223
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(227): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 227
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(231): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 231
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(235): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 235
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(296): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 296
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(302): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 302
-Info (12128): Elaborating entity "RandomPoint" for hierarchy "RandomPoint:ran" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 79
-Info (12128): Elaborating entity "RandomTool" for hierarchy "RandomTool:rant" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 80
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1478): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1478
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1485): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1485
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1492): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1492
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1499): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1499
-Info (12128): Elaborating entity "VGAFrequency" for hierarchy "VGAFrequency:VGAFreq" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 333
-Info (12128): Elaborating entity "altpll" for hierarchy "VGAFrequency:VGAFreq|altpll:altpll_component" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1370
-Info (12130): Elaborated megafunction instantiation "VGAFrequency:VGAFreq|altpll:altpll_component" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1370
-Info (12133): Instantiated megafunction "VGAFrequency:VGAFreq|altpll:altpll_component" with the following parameter: File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1370
+Warning (10036): Verilog HDL or VHDL warning at PongChaos.v(51): object "P1_paddle_speed" assigned a value but never read File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 51
+Warning (10036): Verilog HDL or VHDL warning at PongChaos.v(52): object "P2_paddle_speed" assigned a value but never read File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 52
+Warning (10036): Verilog HDL or VHDL warning at PongChaos.v(73): object "P3Score" assigned a value but never read File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 73
+Warning (10036): Verilog HDL or VHDL warning at PongChaos.v(74): object "P4Score" assigned a value but never read File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 74
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(105): truncated value with size 32 to match size of target (21) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 105
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(113): truncated value with size 32 to match size of target (21) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 113
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(187): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 187
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(211): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 211
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(228): truncated value with size 32 to match size of target (28) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 228
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(406): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 406
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(412): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 412
+Info (12128): Elaborating entity "RandomPoint" for hierarchy "RandomPoint:ran" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 97
+Info (12128): Elaborating entity "RandomTool" for hierarchy "RandomTool:rant" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 98
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1642): truncated value with size 32 to match size of target (4) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1642
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1649): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1649
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1656): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1656
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1663): truncated value with size 32 to match size of target (8) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1663
+Info (12128): Elaborating entity "VGAFrequency" for hierarchy "VGAFrequency:VGAFreq" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 473
+Info (12128): Elaborating entity "altpll" for hierarchy "VGAFrequency:VGAFreq|altpll:altpll_component" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1533
+Info (12130): Elaborated megafunction instantiation "VGAFrequency:VGAFreq|altpll:altpll_component" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1533
+Info (12133): Instantiated megafunction "VGAFrequency:VGAFreq|altpll:altpll_component" with the following parameter: File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1533
     Info (12134): Parameter "bandwidth_type" = "AUTO"
     Info (12134): Parameter "clk0_divide_by" = "25"
     Info (12134): Parameter "clk0_duty_cycle" = "50"
@@ -1241,18 +1394,20 @@ Info (12133): Instantiated megafunction "VGAFrequency:VGAFreq|altpll:altpll_comp
 Info (12021): Found 1 design units, including 1 entities, in source file db/VGAFrequency_altpll.v
     Info (12023): Found entity 1: VGAFrequency_altpll File: /cmshome/chante16/Desktop/PongChaos/db/VGAFrequency_altpll.v Line: 30
 Info (12128): Elaborating entity "VGAFrequency_altpll" for hierarchy "VGAFrequency:VGAFreq|altpll:altpll_component|VGAFrequency_altpll:auto_generated" File: /usr/local/cms/intelFPGA_lite/16.1/quartus/libraries/megafunctions/altpll.tdf Line: 898
-Info (12128): Elaborating entity "VGAController" for hierarchy "VGAController:VGAControl" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 335
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1249): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1249
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1250): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1250
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1258): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1258
-Warning (10230): Verilog HDL assignment warning at PongChaos.v(1266): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1266
-Info (278001): Inferred 4 megafunctions from design logic
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1156
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult1" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1157
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult4" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1172
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult5" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1173
-Info (12130): Elaborated megafunction instantiation "lpm_mult:Mult0" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1156
-Info (12133): Instantiated megafunction "lpm_mult:Mult0" with the following parameter: File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1156
+Info (12128): Elaborating entity "VGAController" for hierarchy "VGAController:VGAControl" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 475
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1412): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1412
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1413): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1413
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1421): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1421
+Warning (10230): Verilog HDL assignment warning at PongChaos.v(1429): truncated value with size 32 to match size of target (11) File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1429
+Info (278001): Inferred 6 megafunctions from design logic
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1311
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult1" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1312
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult6" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1335
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult7" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1335
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult4" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1327
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult5" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1328
+Info (12130): Elaborated megafunction instantiation "lpm_mult:Mult0" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1311
+Info (12133): Instantiated megafunction "lpm_mult:Mult0" with the following parameter: File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 1311
     Info (12134): Parameter "LPM_WIDTHA" = "12"
     Info (12134): Parameter "LPM_WIDTHB" = "12"
     Info (12134): Parameter "LPM_WIDTHP" = "24"
@@ -1265,44 +1420,44 @@ Info (12133): Instantiated megafunction "lpm_mult:Mult0" with the following para
 Info (12021): Found 1 design units, including 1 entities, in source file db/mult_t5t.tdf
     Info (12023): Found entity 1: mult_t5t File: /cmshome/chante16/Desktop/PongChaos/db/mult_t5t.tdf Line: 29
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 22
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 27
+    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 25
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 30
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 15 registers lost all their fanouts during netlist optimizations.
+Info (17049): 26 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /cmshome/chante16/Desktop/PongChaos/output_files/PongChaos.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 19 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "CLOCK2_50" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 17
-    Warning (15610): No output dependent on input pin "CLOCK3_50" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 18
-    Warning (15610): No output dependent on input pin "SW[1]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[2]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[3]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[4]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[5]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[6]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[7]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[8]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[9]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[10]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[11]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[12]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[13]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[14]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[15]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[16]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-    Warning (15610): No output dependent on input pin "SW[17]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
-Info (21057): Implemented 1457 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "CLOCK2_50" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 20
+    Warning (15610): No output dependent on input pin "CLOCK3_50" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 21
+    Warning (15610): No output dependent on input pin "SW[1]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[2]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[3]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[4]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[5]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[6]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[7]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[8]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[9]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[10]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[11]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[12]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[13]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[14]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[15]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[16]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+    Warning (15610): No output dependent on input pin "SW[17]" File: /cmshome/chante16/Desktop/PongChaos/PongChaos.v Line: 23
+Info (21057): Implemented 1786 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 25 input pins
     Info (21059): Implemented 29 output pins
-    Info (21061): Implemented 1394 logic cells
+    Info (21061): Implemented 1719 logic cells
     Info (21065): Implemented 1 PLLs
-    Info (21062): Implemented 8 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 58 warnings
-    Info: Peak virtual memory: 1052 megabytes
-    Info: Processing ended: Thu Mar 12 18:16:00 2020
-    Info: Elapsed time: 00:00:12
-    Info: Total CPU time (on all processors): 00:00:20
+    Info (21062): Implemented 12 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 52 warnings
+    Info: Peak virtual memory: 1062 megabytes
+    Info: Processing ended: Thu Mar 12 20:54:29 2020
+    Info: Elapsed time: 00:00:25
+    Info: Total CPU time (on all processors): 00:00:33
 
 
 +------------------------------------------+

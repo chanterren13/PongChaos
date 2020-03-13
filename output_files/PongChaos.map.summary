@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Thu Mar 12 18:16:00 2020
+Analysis & Synthesis Status : Successful - Thu Mar 12 20:54:28 2020
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : PongChaos
 Top-level Entity Name : PongChaos
 Family : Cyclone IV E
-Total logic elements : 1,389
-    Total combinational functions : 1,367
-    Dedicated logic registers : 251
-Total registers : 251
+Total logic elements : 1,719
+    Total combinational functions : 1,706
+    Dedicated logic registers : 266
+Total registers : 266
 Total pins : 54
 Total virtual pins : 0
 Total memory bits : 0
-Embedded Multiplier 9-bit elements : 8
+Embedded Multiplier 9-bit elements : 12
 Total PLLs : 1

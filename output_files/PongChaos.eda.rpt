@@ -1,5 +1,5 @@
 EDA Netlist Writer report for PongChaos
-Thu Mar 12 18:16:25 2020
+Thu Mar 12 20:54:54 2020
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Thu Mar 12 18:16:25 2020 ;
+; EDA Netlist Writer Status ; Successful - Thu Mar 12 20:54:54 2020 ;
 ; Revision Name             ; PongChaos                             ;
 ; Top-level Entity Name     ; PongChaos                             ;
 ; Family                    ; Cyclone IV E                          ;
@@ -89,7 +89,7 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Mar 12 18:16:23 2020
+    Info: Processing started: Thu Mar 12 20:54:52 2020
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off PongChaos -c PongChaos
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (204019): Generated file PongChaos_7_1200mv_85c_slow.vo in folder "/cmshome/chante16/Desktop/PongChaos/simulation/modelsim/" for EDA simulation tool
@@ -101,9 +101,9 @@ Info (204019): Generated file PongChaos_7_1200mv_0c_v_slow.sdo in folder "/cmsho
 Info (204019): Generated file PongChaos_min_1200mv_0c_v_fast.sdo in folder "/cmshome/chante16/Desktop/PongChaos/simulation/modelsim/" for EDA simulation tool
 Info (204019): Generated file PongChaos_v.sdo in folder "/cmshome/chante16/Desktop/PongChaos/simulation/modelsim/" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 1085 megabytes
-    Info: Processing ended: Thu Mar 12 18:16:25 2020
+    Info: Peak virtual memory: 1090 megabytes
+    Info: Processing ended: Thu Mar 12 20:54:54 2020
     Info: Elapsed time: 00:00:02
-    Info: Total CPU time (on all processors): 00:00:01
+    Info: Total CPU time (on all processors): 00:00:02
 
 

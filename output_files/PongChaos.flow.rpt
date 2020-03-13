@@ -1,5 +1,5 @@
 Flow report for PongChaos
-Thu Mar 12 18:16:25 2020
+Thu Mar 12 20:54:54 2020
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -41,21 +41,21 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Thu Mar 12 18:16:25 2020       ;
+; Flow Status                        ; Successful - Thu Mar 12 20:54:54 2020       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; PongChaos                                   ;
 ; Top-level Entity Name              ; PongChaos                                   ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 1,375 / 114,480 ( 1 % )                     ;
-;     Total combinational functions  ; 1,367 / 114,480 ( 1 % )                     ;
-;     Dedicated logic registers      ; 249 / 114,480 ( < 1 % )                     ;
-; Total registers                    ; 251                                         ;
+; Total logic elements               ; 1,713 / 114,480 ( 1 % )                     ;
+;     Total combinational functions  ; 1,706 / 114,480 ( 1 % )                     ;
+;     Dedicated logic registers      ; 264 / 114,480 ( < 1 % )                     ;
+; Total registers                    ; 266                                         ;
 ; Total pins                         ; 54 / 529 ( 10 % )                           ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0 / 3,981,312 ( 0 % )                       ;
-; Embedded Multiplier 9-bit elements ; 8 / 532 ( 2 % )                             ;
+; Embedded Multiplier 9-bit elements ; 12 / 532 ( 2 % )                            ;
 ; Total PLLs                         ; 1 / 4 ( 25 % )                              ;
 +------------------------------------+---------------------------------------------+
 
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/12/2020 18:15:48 ;
+; Start date & time ; 03/12/2020 20:54:05 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; PongChaos           ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 251485282823861.158405134830349        ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID               ; 251485282823861.158406084409456        ; --            ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                            ; --            ; --          ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)              ; <None>        ; --          ; --             ;
 ; EDA_TIME_SCALE                      ; 1 ps                                   ; --            ; --          ; eda_simulation ;
@@ -95,12 +95,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:11     ; 1.0                     ; 1030 MB             ; 00:00:19                           ;
-; Fitter                    ; 00:00:15     ; 1.0                     ; 1480 MB             ; 00:00:26                           ;
-; Assembler                 ; 00:00:03     ; 1.0                     ; 840 MB              ; 00:00:02                           ;
-; TimeQuest Timing Analyzer ; 00:00:03     ; 1.1                     ; 975 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 1085 MB             ; 00:00:01                           ;
-; Total                     ; 00:00:34     ; --                      ; --                  ; 00:00:50                           ;
+; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 1035 MB             ; 00:00:32                           ;
+; Fitter                    ; 00:00:15     ; 1.1                     ; 1483 MB             ; 00:00:27                           ;
+; Assembler                 ; 00:00:03     ; 1.0                     ; 834 MB              ; 00:00:02                           ;
+; TimeQuest Timing Analyzer ; 00:00:03     ; 1.1                     ; 973 MB              ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 1090 MB             ; 00:00:02                           ;
+; Total                     ; 00:00:47     ; --                      ; --                  ; 00:01:05                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

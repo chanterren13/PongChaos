@@ -1,10 +1,31 @@
 
-State Machine - |PongChaos|movement
-Name movement.011 movement.010 movement.001 movement.000 
-movement.000 0 0 0 0 
-movement.001 0 0 1 1 
-movement.010 0 1 0 1 
-movement.011 1 0 0 1 
+State Machine - |PongChaos|vmovement
+Name vmovement.011 vmovement.010 vmovement.001 vmovement.000 
+vmovement.000 0 0 0 0 
+vmovement.001 0 0 1 1 
+vmovement.010 0 1 0 1 
+vmovement.011 1 0 0 1 
+
+State Machine - |PongChaos|hmovement
+Name hmovement.011 hmovement.010 hmovement.001 hmovement.000 
+hmovement.000 0 0 0 0 
+hmovement.001 0 0 1 1 
+hmovement.010 0 1 0 1 
+hmovement.011 1 0 0 1 
+
+State Machine - |PongChaos|tool
+Name tool.1010 tool.1001 tool.1000 tool.0111 tool.0110 tool.0101 tool.0100 tool.0011 tool.0010 tool.0001 tool.0000 
+tool.0000 0 0 0 0 0 0 0 0 0 0 0 
+tool.0001 0 0 0 0 0 0 0 0 0 1 1 
+tool.0010 0 0 0 0 0 0 0 0 1 0 1 
+tool.0011 0 0 0 0 0 0 0 1 0 0 1 
+tool.0100 0 0 0 0 0 0 1 0 0 0 1 
+tool.0101 0 0 0 0 0 1 0 0 0 0 1 
+tool.0110 0 0 0 0 1 0 0 0 0 0 1 
+tool.0111 0 0 0 1 0 0 0 0 0 0 1 
+tool.1000 0 0 1 0 0 0 0 0 0 0 1 
+tool.1001 0 1 0 0 0 0 0 0 0 0 1 
+tool.1010 1 0 0 0 0 0 0 0 0 0 1 
 
 State Machine - |PongChaos|drawItem
 Name drawItem.01 
